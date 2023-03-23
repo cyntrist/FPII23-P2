@@ -9,5 +9,8 @@ namespace AdventureGame
         {
 
         }
+
+        #region métodos
+        #endregion
     }
 }
