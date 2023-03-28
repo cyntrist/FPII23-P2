@@ -1,6 +1,8 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
+using System.Text.RegularExpressions;
+
 namespace AdventureGame
 {
     internal class Program
@@ -30,10 +32,10 @@ namespace AdventureGame
 
         static void ReadRooms(string file)
         {
-            StreamReader f = new StreamReader(file);
+            StreamReader f = new (file);
             while (!f.EndOfStream)
             {
-                int n = int.Parse(f.ReadLine());
+                int n = int.Parse(f.ReadLine()!);
                 ReadRoom(ref f, n);
             }
             f.Close();
@@ -41,11 +43,20 @@ namespace AdventureGame
 
         static void ReadRoom(ref StreamReader f, int n)
         {
-            while(!f.EndOfStream && f.Peek() != -1)
-            Console.WriteLine("Room: " + f.ReadLine() + "   "
-                                + "Name: " + f.ReadLine() + "   "
-                                + "InitRoom: " + f.ReadLine());
-            f.ReadLine();
+            Console.WriteLine("Room: " + n + "   "
+                + "Name: "  + f.ReadLine() + "   "
+                + "Descr: " + f.ReadLine());
+            f.ReadLine(); // ------
+            string nl = f.ReadLine()!;
+            while (!f.EndOfStream && !string.IsNullOrWhiteSpace(nl)) // hasta que haya línea en blanco
+            {
+                nl = Regex.Replace(nl, @"\s+", "/"); // Reemplaza todos los espacios con un solo '/'
+                string[] bits = nl.Split("/"); // Parte la línea en trozos entre '/'
+                nl = "Route from room " + n + " to room " + bits[1] + ", direction " + bits[0] + ". CondItem: ";
+                if (bits.Length > 2) { nl += bits[2]; } // Si tiene CondItem se lo añade
+                Console.WriteLine(nl); // Lo escribe
+                nl = f.ReadLine()!; // Siguiente línea
+            }
         }
         #endregion
     }
