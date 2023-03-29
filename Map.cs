@@ -30,37 +30,37 @@ namespace Crowther.Maps
 
         }
 
-        static public void AddItem(string name, string description, int iniRoom)
+        public void AddItem(string name, string description, int iniRoom)
         {
 
         }
 
-        static private int GetItemIndex(string name)
+        private int GetItemIndex(string name)
         {
             return 0;
         }
 
-        static public void AddRoom(int nRoom, string name, string description)
+        public void AddRoom(int nRoom, string name, string description)
         {
 
         }
 
-        static public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
+        public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
         {
 
         }
 
-        static public void AddItemRoom(int nRoom, int itemId)
+        public void AddItemRoom(int nRoom, int itemId)
         {
 
         }
 
-        static public string GetInfoRoom(int nRoom)
+        public string GetInfoRoom(int nRoom)
         {
             return null;
         }
 
-        static public string GetItemsRoom(int nRoom)
+        public string GetItemsRoom(int nRoom)
         {
             return null;
         }
@@ -68,12 +68,12 @@ namespace Crowther.Maps
         /// <summary>
         /// ////////////////////////////////////////
         /// </summary>
-        static public void SetItemsRooms()
+        public void SetItemsRooms()
         {
 
         }
 
-        static public void WriteMap()
+        public void WriteMap()
         {
 
         }
