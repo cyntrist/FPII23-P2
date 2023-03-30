@@ -2,10 +2,8 @@
 // Paula Sierra Luque
 
 using System.Text.RegularExpressions;
-using Crowther.Maps;
-using static Crowther.Maps.Map;
-using Crowther.Rooms;
-using static Crowther.Rooms.Room;
+using AdventureGame;
+using Listas;
 
 namespace AdventureGame
 {
@@ -23,7 +21,7 @@ namespace AdventureGame
         #region métodos
         static private void ReadInventory(string file)
         {
-            StreamReader sr = new StreamReader(file);
+            StreamReader sr = new(file);
             while (!sr.EndOfStream)
             {
                 Console.WriteLine("Item name: " + sr.ReadLine() + "   " 

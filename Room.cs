@@ -1,10 +1,10 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using Crowther.Maps;
-using static Crowther.Maps.Map;
+using AdventureGame;
+using Listas;
 
-namespace Crowther.Rooms
+namespace AdventureGame
 {
     public class Room
     {
@@ -14,44 +14,47 @@ namespace Crowther.Rooms
             public int destRoom, // habitación destino de la ruta
             conditionalItem; // índice del ítem condicional (al array de ítems de Map)
 
-            public static bool operator ==(Route r1, Route r2) { return false; }
-            public static bool operator !=(Route r1, Route r2) { return false; }
+            //public static bool operator ==(Route r1, Route r2) { return false; }
+            //public static bool operator !=(Route r1, Route r2) { return false; }
         }
 
         string name, description; // nombre y descripción de la habitación leídos de CrowtherRooms
         Route[] routes; // array de rutas de la habitación
         int nRoutes; // número de rutas = índice a la primera ruta libre
-        List<Item> items; // lista de índices de ítems (al array de ítems de Map)
+        ListaEnlazada items; // lista de índices de ítems (al array de ítems de Map)
 
         public Room(string nam, string des, int maxRts)
         {
             name = nam;
             description = des;
             routes = new Route[maxRts];
-            items = new List<Item>();
-        }
-
-        public Room()
-        {
+            items = new ListaEnlazada();
         }
 
         public void AddRoute(string dir, int desR, int condIt)
         {
-            Route ruta = new() // inicaliza nueva ruta
+            if (nRoutes < routes.Length) // si hay espacio
             {
-                direction = dir,
-                destRoom = desR,
-                conditionalItem = condIt
-            };
+                Route ruta = new() // inicaliza nueva ruta
+                {
+                    direction = dir,
+                    destRoom = desR,
+                    conditionalItem = condIt
+                };
 
-            int i = 0; // para añadirlo en el primer hueco nulo
-            while (routes[i] != null) i++;
-            routes[i] = ruta;
+                routes[nRoutes] = ruta; 
+                nRoutes++;
+                //routes[nRoutes++] = ruta;
+            }
+            else // si no hay espacio
+            {
+                Console.WriteLine("ERROR: no se puede añadir nueva ruta.");
+            }
         }
 
         public void AddItem(int it)
         {
-            items.Add(it);
+            items.InsertaFinal(it);
         }
 
         public string GetInfo()

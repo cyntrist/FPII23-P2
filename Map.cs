@@ -1,10 +1,10 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using Crowther.Rooms;
-using static Crowther.Rooms.Room;
+using AdventureGame;
+using Listas;
 
-namespace Crowther.Maps
+namespace AdventureGame
 {
     public class Map
     {
