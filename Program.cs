@@ -44,22 +44,31 @@ namespace AdventureGame
         }
 
         static private void ReadRoom(ref StreamReader f, int n)
-        { // PROBLEMA: no funciona respecto a n de verdad jeje :^) solo lee de arriba a abajo
+        { //Creo que n ya se lee correctamente
             Console.WriteLine("Room: " + n + "   "
                 + "Name: "  + f.ReadLine() + "   "
                 + "Descr: " + f.ReadLine());
             f.ReadLine();                                            // Línea separatoria "------"
-            string nl = f.ReadLine()!;                               // Lee la siguiente línea
-            while (!string.IsNullOrWhiteSpace(nl))                   // Hasta que haya línea en blanco
+            string newline = f.ReadLine()!;                               // Lee la siguiente línea
+            while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
-                nl = Regex.Replace(nl, @"\s+", "/");                 // Reemplaza todos los espacios con un solo '/'
-                string[] bits = nl.Split("/");                       // Parte la línea en trozos entre '/'
-                nl = "Route from room " + n + " to room " + bits[1]
+                newline = Regex.Replace(newline, @"\s+", "/");                 // Reemplaza todos los espacios con un solo '/'
+                string[] bits = newline.Split("/");                       // Parte la línea en trozos entre '/'
+
+                string conditionalItem; 
+                if (bits.Length > 2) // Si tiene CondItem se lo añade
+                {
+                    conditionalItem = bits[2];
+                } else
+                {
+                    conditionalItem = "";
+                }
+                
+                newline = "Route from room " + n + " to room " + bits[1]
                     + ", direction " + bits[0] 
-                    + ". CondItem: ";
-                if (bits.Length > 2) { nl += bits[2]; }              // Si tiene CondItem se lo añade
-                Console.WriteLine(nl);                               // Lo escribe
-                nl = f.ReadLine()!;                                  // Siguiente línea
+                    + ". CondItem: " + conditionalItem;              
+                Console.WriteLine(newline);                               // Lo escribe
+                newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
 
