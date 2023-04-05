@@ -83,6 +83,30 @@ namespace Listas{
 			return salida;
         }
 
+		public int[] ToArray()
+		{
+			int length = 0;
+			Nodo actual = pri;
+			while (actual != null) //cuenta cuantos nodos hay para ver longitud
+			{
+				length++;
+				actual = actual.sig;
+			}
+			
+			int[] array = new int[length]; //creo nuevo array de enteros con la longitud anterior
+			int ind = 0;
+			actual = pri;
+
+			while (actual != null) //se copian los datos de los nodos en el array nuevo
+			{
+				array[ind] = actual.dato;
+				actual = actual.sig;
+				ind++; //aumenta indice del array
+			}
+
+			return array;
+		}
+
 		// elimina elto e (la primera aparición) de la lista, si está, y devuelve true
 		// no hace nada en otro caso y devuelve false
 		public bool EliminaElto(int e){						

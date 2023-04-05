@@ -28,6 +28,7 @@ namespace AdventureGame
             name = nam;
             description = des;
             routes = new Route[maxRts];
+            nRoutes = 0; 
             items = new ListaEnlazada();
         }
 
@@ -41,10 +42,7 @@ namespace AdventureGame
                     destRoom = desR,
                     conditionalItem = condIt
                 };
-
-                routes[nRoutes] = ruta; 
-                nRoutes++;
-                //routes[nRoutes++] = ruta;
+                routes[nRoutes++] = ruta;
             }
             else // si no hay espacio
             {
@@ -54,17 +52,17 @@ namespace AdventureGame
 
         public void AddItem(int it)
         {
-            items.InsertaFinal(it);
+            this.items.InsertaFinal(it);
         }
 
         public string GetInfo()
         {
-            return null;
+            return name + "\n" + description + "\n";
         }
 
         public int[] GetArrayItems()
         {
-            return null;
+            return items.ToArray();
         }
     }
 
