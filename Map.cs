@@ -22,7 +22,11 @@ namespace AdventureGame
 
         public Map(int maxRooms = 100, int maxRts = 10, int maxItems = 20)
         {
-
+            rooms = new Room[maxRooms];
+            nRooms = 0;
+            items = new Item[maxItems];
+            nItems = 0;
+            maxRoutes = maxRts;
         }
 
         public Map()
@@ -42,7 +46,16 @@ namespace AdventureGame
 
         public void AddRoom(int nRoom, string name, string description)
         {
-
+            if(nRoom >= rooms.Length) //si nRoom no cabe
+            {
+                Console.WriteLine("No se puede añadir la habitación.");
+            }
+            else //añadimos room
+            {
+            Room newRoom = new Room(name, description, maxRoutes);
+            rooms[nRoom] = newRoom;
+            nRooms++;
+            }
         }
 
         public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
