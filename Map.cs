@@ -29,12 +29,14 @@ namespace AdventureGame
             maxRoutes = maxRts;
         }
 
-        public Map()
-        {
+        // public Map()
+        // {
 
-        }
+        // }
 
         public void AddItem(string name, string description, int iniRoom)
+        // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
+        //en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
         {
 
         }

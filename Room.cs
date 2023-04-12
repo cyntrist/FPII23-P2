@@ -23,7 +23,7 @@ namespace AdventureGame
         int nRoutes; // número de rutas = índice a la primera ruta libre
         ListaEnlazada items; // lista de índices de ítems (al array de ítems de Map)
 
-        public Room(string nam, string des, int maxRts)
+        public Room(string nam, string des, int maxRts) //constructora Room
         {
             name = nam;
             description = des;
