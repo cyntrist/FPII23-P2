@@ -42,7 +42,8 @@ namespace AdventureGame
                     destRoom = desR,
                     conditionalItem = condIt
                 };
-                routes[nRoutes++] = ruta;
+                routes[nRoutes] = ruta; // o routes[nRoutes++] = ruta; ?
+                nRoutes++;
             }
             else // si no hay espacio
             {
@@ -52,7 +53,7 @@ namespace AdventureGame
 
         public void AddItem(int it)
         {
-            this.items.InsertaFinal(it);
+            items.InsertaFinal(it);
         }
 
         public string GetInfo()
@@ -65,5 +66,4 @@ namespace AdventureGame
             return items.ToArray();
         }
     }
-
 }

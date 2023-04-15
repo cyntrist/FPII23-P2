@@ -13,7 +13,7 @@ namespace Listas{
 			// public Nodo() {} // por defecto
 
 			// implementamos nuestra propia constructora para nodos
-			public Nodo(int _dato=0, Nodo _sig=null) {  // valores por defecto dato=0; y sig=null
+			public Nodo(int _dato = 0, Nodo _sig = null) {  // valores por defecto dato=0; y sig=null
 				dato = _dato;
 				sig = _sig;
 			}
@@ -25,12 +25,10 @@ namespace Listas{
 		// campo pri: referencia al primer nodo de la lista
 		Nodo pri;  
 
-
 		// constructora de la clase Lista
 		public ListaEnlazada(){  
 			pri = null;   //  lista vacia
 		}
-
 
 		// insertar elto e al ppio de la lista
 		public void InsertaPpio(int e){  
@@ -38,14 +36,13 @@ namespace Listas{
 			pri = aux;
 		}
 
-
 		// añadir elto e al final de la lista
 		public void InsertaFinal(int e){  
 			// distinguimos dos casos
 			
 			// lista vacia
 			if (pri == null) {     
-				pri = new Nodo(e,null); // creamos nodo en pri
+				pri = new Nodo(e, null); // creamos nodo en pri
 
 			// lista no vacia				
 			} else { 
@@ -55,8 +52,6 @@ namespace Listas{
 				aux.sig = new Nodo(e,null); // creamos el nuevo a continuación
 			}
 		}
-
-
 
 		// buscar elto e
 		public bool BuscaDato(int e){
@@ -68,7 +63,6 @@ namespace Listas{
 			// o bien con aux apuntando al primer nodo con elto e
 			return aux!=null;
 		}
-
 
 		// Conversion a string
         // método ToString que se invoca implícitamente cuando se hace Console.Write
@@ -140,8 +134,6 @@ namespace Listas{
 			}
 			return n;
 		}
-
 	}
-
 }
 

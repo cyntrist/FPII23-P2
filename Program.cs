@@ -52,17 +52,12 @@ namespace AdventureGame
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
-                newline = Regex.Replace(newline, @"\s+", "/");                 // Reemplaza todos los espacios con un solo '/'
+                newline = Regex.Replace(newline, @"\s+", "/");            // Reemplaza todos los espacios con un solo '/'
                 string[] bits = newline.Split("/");                       // Parte la línea en trozos entre '/'
 
-                string conditionalItem; 
-                if (bits.Length > 2) // Si tiene CondItem se lo añade
-                {
+                string conditionalItem = ""; 
+                if (bits.Length > 2)                                      // Si tiene CondItem se lo añade
                     conditionalItem = bits[2];
-                } else
-                {
-                    conditionalItem = "";
-                }
                 
                 newline = "Route from room " + n + " to room " + bits[1]
                     + ", direction " + bits[0] 

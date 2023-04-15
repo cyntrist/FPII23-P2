@@ -24,60 +24,80 @@ namespace AdventureGame
         {
             rooms = new Room[maxRooms];
             nRooms = 0;
+            maxRoutes = maxRts;
             items = new Item[maxItems];
             nItems = 0;
-            maxRoutes = maxRts;
         }
-
-        // public Map()
-        // {
-
-        // }
 
         public void AddItem(string name, string description, int iniRoom)
         // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
         //en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
         {
+            if (nItems < items.Length) // si hay espacio
+            {
+                Item item = new() // crea un item nuevo
+                {
+                    name = name,
+                    description = description,
+                    initialRoom = iniRoom
+                };
 
+                items[nItems] = item; // lo asigna
+                nItems++; // lo añade
+            }
+            else // si no hay espacio
+            {
+                Console.WriteLine("ERROR: no se puede añadir nueva ruta.");
+            }
         }
 
         private int GetItemIndex(string name)
         {
-            return 0;
+            int index = 0;
+            while (items[index].name != name)
+                index++;
+
+            if (index == items.Length) // si ha acabado el array significa que NO lo ha encontrado
+                return -1;
+            else // si ha acabado antes de llegar al final significa que SÍ lo ha encontrado
+                return index;
         }
 
         public void AddRoom(int nRoom, string name, string description)
         {
-            if(nRoom >= rooms.Length) //si nRoom no cabe
+            if (nRoom >= rooms.Length) //si nRoom no cabe
             {
                 Console.WriteLine("No se puede añadir la habitación.");
             }
-            else //añadimos room
+            else // añadimos room
             {
-            Room newRoom = new Room(name, description, maxRoutes);
-            rooms[nRoom] = newRoom;
-            nRooms++;
+                Room newRoom = new(name, description, maxRoutes);
+                rooms[nRoom] = newRoom;
+                nRooms++;
             }
         }
 
         public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
         {
-
+            int condicion = -1; // si no tiene condItem, se queda en 0 (no se si tiene que ser 0???)
+            if (condItem != null || condItem != "") // si tiene condItem
+                condicion = GetItemIndex(condItem); // se lo asigna a la variable
+            rooms[nRoom].AddRoute(dir, destRoom, condicion); // añade la ruta
         }
 
         public void AddItemRoom(int nRoom, int itemId)
         {
-
+            rooms[nRoom].AddItem(itemId);
         }
 
         public string GetInfoRoom(int nRoom)
         {
-            return null;
+            return rooms[nRoom].GetInfo();
         }
 
         public string GetItemsRoom(int nRoom)
         {
-            return null;
+            return rooms[nRoom].GetArrayItems().ToString();
         }
 
         /// <summary>
