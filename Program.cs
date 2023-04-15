@@ -72,7 +72,18 @@ namespace AdventureGame
         /// </summary>
         static private void ReadInventory(string file, Map map)
         {
-
+            StreamReader sr = new StreamReader(file);
+            while(!sr.EndOfStream)
+            {
+                string itemName = sr.ReadLine();
+                string itemDesc = sr.ReadLine();
+                int initRoom = int.Parse(sr.ReadLine());
+                sr.ReadLine();
+                
+                //map.AddItemRoom(initRoom, ); // Agrega el ítem al mapa
+            }
+            sr.Close();
+            }
         }
 
         static private void ReadRooms(string file, Map map)
