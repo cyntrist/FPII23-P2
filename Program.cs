@@ -14,12 +14,13 @@ namespace AdventureGame
 
         static void Main()
         {
-            ReadInventory(ITEMS_FILE);
-            ReadRooms(ROOMS_FILE);
+            //tienen que tomar MAP pero no se muy bien como 
+            //ReadInventory(ITEMS_FILE, ?¿?¿); 
+            //ReadRooms(ROOMS_FILE, ?¿?¿);
         }
 
         #region métodos
-        static private void ReadInventory(string file)
+        static private void ReadInventory(string file, Map map)
         {
             StreamReader sr = new(file);
             while (!sr.EndOfStream)
@@ -28,27 +29,31 @@ namespace AdventureGame
                                 + "Descr: " + sr.ReadLine() + "   " 
                                 + "InitRoom: " + sr.ReadLine());
                 sr.ReadLine();
+                //map.AddItemRoom(nroom, itemId); // añade el item itemId a la habitacion nRoom
             }
             sr.Close();
         }
 
-        static private void ReadRooms(string file)
+        static private void ReadRooms(string file, Map map)
         {
             StreamReader f = new (file);
             while (!f.EndOfStream)
             { // mientras siga el documento
                 int n = int.Parse(f.ReadLine()!); // número de la habitación
-                ReadRoom(ref f, n); // lee esta habitación
+                ReadRoom(ref f, n, map); // lee esta habitación
             }
             f.Close();
         }
 
-        static private void ReadRoom(ref StreamReader f, int n)
+        static private void ReadRoom(ref StreamReader f, int n, Map map)
         { //Creo que n ya se lee correctamente
             Console.WriteLine("Room: " + n + "   "
                 + "Name: "  + f.ReadLine() + "   "
                 + "Descr: " + f.ReadLine());
             f.ReadLine();                                            // Línea separatoria "------"
+
+            //map.AddRoom(n, f, description); // deberiamos llamar description en el readline anterior ?
+
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
@@ -63,37 +68,11 @@ namespace AdventureGame
                     + ", direction " + bits[0] 
                     + ". CondItem: " + conditionalItem;              
                 Console.WriteLine(newline);                               // Lo escribe
+
+                //map.AddRouteRoom(n, bits[1], bits[0], conditionalItem); //ayuda
+
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
-        }
-
-        /// <summary>
-        /// ////////////////////
-        /// </summary>
-        static private void ReadInventory(string file, Map map)
-        {
-            StreamReader sr = new StreamReader(file);
-            while(!sr.EndOfStream)
-            {
-                string itemName = sr.ReadLine();
-                string itemDesc = sr.ReadLine();
-                int initRoom = int.Parse(sr.ReadLine());
-                sr.ReadLine();
-                
-                //map.AddItemRoom(initRoom, ); // Agrega el ítem al mapa
-            }
-            sr.Close();
-            }
-        }
-
-        static private void ReadRooms(string file, Map map)
-        {
-
-        }
-
-        static private void ReadRoom(StreamReader f, int nRoom, Map map)
-        {
-
         }
         #endregion
     }
