@@ -14,9 +14,9 @@ namespace AdventureGame
 
         static void Main()
         {
-            //tienen que tomar MAP pero no se muy bien como 
-            //ReadInventory(ITEMS_FILE, ?¿?¿); 
-            //ReadRooms(ROOMS_FILE, ?¿?¿);
+            Map map = new();
+            ReadInventory(ITEMS_FILE, map); 
+            ReadRooms(ROOMS_FILE, map);
         }
 
         #region métodos
@@ -25,11 +25,18 @@ namespace AdventureGame
             StreamReader sr = new(file);
             while (!sr.EndOfStream)
             {
-                Console.WriteLine("Item name: " + sr.ReadLine() + "   " 
-                                + "Descr: " + sr.ReadLine() + "   " 
-                                + "InitRoom: " + sr.ReadLine());
+                string name, desc, iniRoom;
+                name = sr.ReadLine();
+                desc = sr.ReadLine();
+                iniRoom = sr.ReadLine();
+                Console.WriteLine("Item name: " + name + "   " 
+                                + "Descr: " + desc + "   " 
+                                + "InitRoom: " + iniRoom);
                 sr.ReadLine();
-                //map.AddItemRoom(nroom, itemId); // añade el item itemId a la habitacion nRoom
+                map.AddItem(name, desc, int.Parse(iniRoom));
+                // map.AddItemRoom(int.Parse(iniRoom), ???)
+                // en el enunciado ponía AddItemRoom pero no entiendo por qué??
+                // porque además no podemos usar getitemindex() porque es privado
             }
             sr.Close();
         }
@@ -47,12 +54,15 @@ namespace AdventureGame
 
         static private void ReadRoom(ref StreamReader f, int n, Map map)
         { //Creo que n ya se lee correctamente
-            Console.WriteLine("Room: " + n + "   "
-                + "Name: "  + f.ReadLine() + "   "
-                + "Descr: " + f.ReadLine());
+            string name, desc;
+            name = f.ReadLine()!;
+            desc = f.ReadLine()!;
+            Console.WriteLine("Room: "  + n     + "   "
+                            + "Name: "  + name  + "   "
+                            + "Descr: " + desc);
             f.ReadLine();                                            // Línea separatoria "------"
 
-            //map.AddRoom(n, f, description); // deberiamos llamar description en el readline anterior ?
+            map.AddRoom(n, name, desc); // deberiamos llamar description en el readline anterior ? hecho, y name también
 
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
@@ -69,7 +79,7 @@ namespace AdventureGame
                     + ". CondItem: " + conditionalItem;              
                 Console.WriteLine(newline);                               // Lo escribe
 
-                //map.AddRouteRoom(n, bits[1], bits[0], conditionalItem); //ayuda
+                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), conditionalItem); // Esto ya debería ir bien? idk
 
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método

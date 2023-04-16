@@ -100,17 +100,14 @@ namespace AdventureGame
             return rooms[nRoom].GetArrayItems().ToString();
         }
 
-        /// <summary>
-        /// ////////////////////////////////////////
-        /// </summary>
         public void SetItemsRooms()
         {
-
+            /// me queda esto del apartado 5
         }
 
         public void WriteMap()
         {
-
+            /// me queda esto del apartado 5
         }
     }
 }
