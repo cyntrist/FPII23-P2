@@ -65,5 +65,30 @@ namespace AdventureGame
         {
             return items.ToArray();
         }
+
+        #region 6. Acciones del Jugador
+
+        // public int Move(string dir, List inventory)
+        // {
+            
+        // }
+        // public bool ForcedMove()
+        // {
+            
+        // }
+        public bool RemoveItem(int it)
+        {
+            if (items.BuscaDato(it)) // si el elemento está en la lista
+            {  
+                items.EliminaElto(it); // lo eliminamos
+                return true;           //y devuelve true
+            } 
+            else
+            {
+                return false;   // si no esta devuelve false
+            }
+        }
+
+        #endregion
     }
 }

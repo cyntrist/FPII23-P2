@@ -54,7 +54,7 @@ namespace AdventureGame
         private int GetItemIndex(string name)
         {
             int index = 0;
-            while (items[index].name != name)
+            while (items[index].name != name) //me da error al compilar
                 index++;
 
             if (index == items.Length) // si ha acabado el array significa que NO lo ha encontrado
@@ -109,11 +109,11 @@ namespace AdventureGame
         {
             for (int n = 0; n < nRooms; n++)
             {
-                //Console.WriteLine("Room " + n + ": " + rooms[n].name); // nombre de cada room
-                //Console.WriteLine(rooms[n].description); //descripcion de cada room
-                Console.WriteLine("Directions: " ); //direccion ?¿?¿ no se como implementarlo
-                Console.WriteLine("Items: " + rooms[n].GetArrayItems()); //items de cada habitacion
-                Console.WriteLine(); //linea en blanco
+                //Console.WriteLine("Room " + n + ": " + rooms[n].name);    // nombre de cada room
+                //Console.WriteLine(rooms[n].description);                  //descripcion de cada room
+                Console.WriteLine("Directions: " );                         //direccion ?¿?¿ no se como implementarlo
+                Console.WriteLine("Items: " + rooms[n].GetArrayItems());    //items de cada habitacion
+                Console.WriteLine();                                        //linea en blanco (estetica)
             }
         }
     }
