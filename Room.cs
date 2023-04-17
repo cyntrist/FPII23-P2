@@ -67,6 +67,7 @@ namespace AdventureGame
         }
 
         public string GetStringItems() // MÉTODO NUEVO: ILEGAL??
+                                       // creo que no porque ToString es público y ya hay GetArrayItems
         {
             return items.ToString();
         }

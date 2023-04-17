@@ -42,19 +42,19 @@ namespace AdventureGame
             StreamReader f = new (file);
             while (!f.EndOfStream)
             { // mientras siga el documento
-                int n = int.Parse(f.ReadLine()!); // número de la habitación
+                int n = int.Parse(f.ReadLine()!) - 1; // número de la habitación (- 1 porque empieza en el 1)
                 ReadRoom(ref f, n, map);          // lee esta habitación
             }
             f.Close();
         }
 
         static private void ReadRoom(ref StreamReader f, int n, Map map)
-        { // (- 1 porque empieza en el 1)
+        { // 
             string name, desc;
             name = f.ReadLine()!;
             desc = f.ReadLine()!;
             f.ReadLine();                                            // Línea separatoria "------"
-            map.AddRoom(n - 1, name, desc);                              // Añade al mapa la habitación leída
+            map.AddRoom(n, name, desc);                              // Añade al mapa la habitación leída
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
@@ -65,7 +65,7 @@ namespace AdventureGame
                 if (bits.Length > 2)                                      // Si tiene CondItem 
                     condItem = bits[2];                                   // Se lo añade
                 
-                map.AddRouteRoom(n - 1, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
+                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }

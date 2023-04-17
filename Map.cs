@@ -3,6 +3,8 @@
 
 using AdventureGame;
 using Listas;
+using System.Xml.Linq;
+using static AdventureGame.Map;
 
 namespace AdventureGame
 {
@@ -51,7 +53,9 @@ namespace AdventureGame
         }
 
         private int GetItemIndex(string name)
-        {
+        { // busca el ítem name en el array de ítems y devuelve
+          // su posición en dicho array; -1 si no existe tal ítem.
+          //            no se como hacerlo usando BuscaDato() ???
             int index = 0;
             while (index < items.Length && items[index].name != name) // solucionado error de salida de array
                 index++;
@@ -64,7 +68,6 @@ namespace AdventureGame
 
         public void AddRoom(int nRoom, string name, string description)
         {
-
             if (nRoom < rooms.Length) // si nRoom cabe
             {
                 Room newRoom = new(name, description, maxRoutes);
@@ -103,8 +106,13 @@ namespace AdventureGame
         #region 5. Lectura y almacenamiento de datos
         public void SetItemsRooms()
         {   // Recorre el array de items del mapa, añadiendo cada uno a su habitación de inicio.
-            for (int i = 0; i < items.Length; i++) // recorre el array de ítems del mapa
+            int i = 0;
+            // for (i = 0; i < items.Length; i++) // ESTO ESTA MAL porque recorre espacios vacíos
+            while (i < items.Length && items[i].name != null) // hasta que se acabe el array o encuentre un elto vacío
+            {
                 AddItemRoom(items[i].initialRoom, GetItemIndex(items[i].name)); // añade cada item a su habitación inicial
+                i++;
+            }
         }
 
         public void WriteMap()
