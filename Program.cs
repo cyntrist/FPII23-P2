@@ -26,17 +26,14 @@ namespace AdventureGame
             while (!sr.EndOfStream)
             {
                 string name, desc, iniRoom;
-                name = sr.ReadLine();
-                desc = sr.ReadLine();
-                iniRoom = sr.ReadLine();
-                Console.WriteLine("Item name: " + name + "   " 
-                                + "Descr: " + desc + "   " 
-                                + "InitRoom: " + iniRoom);
+                name    = sr.ReadLine()!;
+                desc    = sr.ReadLine()!;
+                iniRoom = sr.ReadLine()!;
+                Console.WriteLine("Item name: " + name      + "   " 
+                                + "Descr: "     + desc      + "   " 
+                                + "InitRoom: "  + iniRoom);
                 sr.ReadLine();
-                map.AddItem(name, desc, int.Parse(iniRoom));
-                // map.AddItemRoom(int.Parse(iniRoom), ???)
-                // en el enunciado ponía AddItemRoom pero no entiendo por qué??
-                // porque además no podemos usar getitemindex() porque es privado
+                map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
             }
             sr.Close();
         }
@@ -61,9 +58,7 @@ namespace AdventureGame
                             + "Name: "  + name  + "   "
                             + "Descr: " + desc);
             f.ReadLine();                                            // Línea separatoria "------"
-
-            map.AddRoom(n, name, desc); // deberiamos llamar description en el readline anterior ? hecho, y name también
-
+            map.AddRoom(n, name, desc);
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
@@ -74,13 +69,12 @@ namespace AdventureGame
                 if (bits.Length > 2)                                      // Si tiene CondItem se lo añade
                     conditionalItem = bits[2];
                 
-                newline = "Route from room " + n + " to room " + bits[1]
-                    + ", direction " + bits[0] 
-                    + ". CondItem: " + conditionalItem;              
+                newline = "Route from room " + n 
+                        + " to room "        + bits[1]
+                        + ", direction "     + bits[0] 
+                        + ". CondItem: "     + conditionalItem;              
                 Console.WriteLine(newline);                               // Lo escribe
-
-                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), conditionalItem); // Esto ya debería ir bien? idk
-
+                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), conditionalItem); 
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }

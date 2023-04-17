@@ -46,9 +46,7 @@ namespace AdventureGame
                 nRoutes++;
             }
             else // si no hay espacio
-            {
                 Console.WriteLine("ERROR: no se puede añadir nueva ruta.");
-            }
         }
 
         public void AddItem(int it)
@@ -67,7 +65,6 @@ namespace AdventureGame
         }
 
         #region 6. Acciones del Jugador
-
         // public int Move(string dir, List inventory)
         // {
             
@@ -83,12 +80,8 @@ namespace AdventureGame
                 items.EliminaElto(it); // lo eliminamos
                 return true;           //y devuelve true
             } 
-            else
-            {
-                return false;   // si no esta devuelve false
-            }
+            else return false;   // si no esta devuelve false
         }
-
         #endregion
     }
 }

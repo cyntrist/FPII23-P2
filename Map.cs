@@ -30,7 +30,7 @@ namespace AdventureGame
             nItems = 0;
         }
 
-        public void AddItem(string name, string description, int iniRoom)
+        public void AddItemMap(string name, string description, int iniRoom)
         // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
         //en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
         {
@@ -47,9 +47,7 @@ namespace AdventureGame
                 nItems++; // lo añade
             }
             else // si no hay espacio
-            {
                 Console.WriteLine("ERROR: no se puede añadir nueva ruta.");
-            }
         }
 
         private int GetItemIndex(string name)
@@ -67,9 +65,7 @@ namespace AdventureGame
         public void AddRoom(int nRoom, string name, string description)
         {
             if (nRoom >= rooms.Length) //si nRoom no cabe
-            {
                 Console.WriteLine("No se puede añadir la habitación.");
-            }
             else // añadimos room
             {
                 Room newRoom = new(name, description, maxRoutes);
@@ -101,27 +97,32 @@ namespace AdventureGame
             return rooms[nRoom].GetArrayItems().ToString();
         }
 
+        #region 5. Lectura y almacenamiento de datos
         public void SetItemsRooms()
         {
-            
+            for (int i = 0; i < items.Length; i++)
+            {
+
+            }
         }
 
         public void WriteMap()
         {
-            for (int n = 0; n < nRooms; n++)
+            for (int i = 0; i < nRooms; i++)
             {
                 //Console.WriteLine("Room " + n + ": " + rooms[n].name);    // nombre de cada room
                 //Console.WriteLine(rooms[n].description);                  //descripcion de cada room
                 Console.WriteLine("Directions: " );                         //direccion ?¿?¿ no se como implementarlo
-                Console.WriteLine("Items: " + rooms[n].GetArrayItems());    //items de cada habitacion
+                Console.WriteLine("Items: " + rooms[i].GetArrayItems());    //items de cada habitacion
                 Console.WriteLine();                                        //linea en blanco (estetica)
             }
         }
+        #endregion
 
         #region 6. Acciones del Jugador
         // public bool TakeItemRoom(int nRoom, string itemName, List inventory)
         // {
-            
+
         // }
         // public bool DropItemRoom(int nRoom, string itemName, List inventory)
         // {
