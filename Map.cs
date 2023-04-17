@@ -55,7 +55,7 @@ namespace AdventureGame
         private int GetItemIndex(string name)
         {
             int index = 0;
-            while (items[index].name != name) //me da error al compilar
+            while (index < items.Length && items[index].name != name) // solucionado error de salida de array
                 index++;
 
             if (index == items.Length) // si ha acabado el array significa que NO lo ha encontrado
