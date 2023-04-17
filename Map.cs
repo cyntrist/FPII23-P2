@@ -116,5 +116,26 @@ namespace AdventureGame
                 Console.WriteLine();                                        //linea en blanco (estetica)
             }
         }
+
+        #region 6. Acciones del Jugador
+        // public bool TakeItemRoom(int nRoom, string itemName, List inventory)
+        // {
+            
+        // }
+        // public bool DropItemRoom(int nRoom, string itemName, List inventory)
+        // {
+
+        // }
+
+        // public List Move(int nRoom, string dir, List inventory)
+        // {
+
+        // }
+
+        // public string GetItemsInfo(List inventory)
+        // {
+
+        // }
+        #endregion
     }
 }
