@@ -102,12 +102,19 @@ namespace AdventureGame
 
         public void SetItemsRooms()
         {
-            /// me queda esto del apartado 5
+            
         }
 
         public void WriteMap()
         {
-            /// me queda esto del apartado 5
+            for (int n = 0; n < nRooms; n++)
+            {
+                //Console.WriteLine("Room " + n + ": " + rooms[n].name); // nombre de cada room
+                //Console.WriteLine(rooms[n].description); //descripcion de cada room
+                Console.WriteLine("Directions: " ); //direccion ?¿?¿ no se como implementarlo
+                Console.WriteLine("Items: " + rooms[n].GetArrayItems()); //items de cada habitacion
+                Console.WriteLine(); //linea en blanco
+            }
         }
     }
 }
