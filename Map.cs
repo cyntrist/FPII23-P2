@@ -100,10 +100,8 @@ namespace AdventureGame
         #region 5. Lectura y almacenamiento de datos
         public void SetItemsRooms()
         {
-            for (int i = 0; i < items.Length; i++)
-            {
-
-            }
+            for (int i = 0; i < items.Length; i++) // recorre el array de ítems del mapa
+                AddItemRoom(items[i].initialRoom, GetItemIndex(items[i].name)); // añade cada item a su habitación inicial
         }
 
         public void WriteMap()

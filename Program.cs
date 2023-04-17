@@ -58,23 +58,23 @@ namespace AdventureGame
                             + "Name: "  + name  + "   "
                             + "Descr: " + desc);
             f.ReadLine();                                            // Línea separatoria "------"
-            map.AddRoom(n, name, desc);
+            map.AddRoom(n, name, desc);                              // Añade al mapa la habitación leída
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
                 newline = Regex.Replace(newline, @"\s+", "/");            // Reemplaza todos los espacios con un solo '/'
                 string[] bits = newline.Split("/");                       // Parte la línea en trozos entre '/'
 
-                string conditionalItem = ""; 
-                if (bits.Length > 2)                                      // Si tiene CondItem se lo añade
-                    conditionalItem = bits[2];
+                string condItem = ""; 
+                if (bits.Length > 2)                                      // Si tiene CondItem 
+                    condItem = bits[2];                                   // Se lo añade
                 
                 newline = "Route from room " + n 
                         + " to room "        + bits[1]
                         + ", direction "     + bits[0] 
-                        + ". CondItem: "     + conditionalItem;              
+                        + ". CondItem: "     + condItem;              
                 Console.WriteLine(newline);                               // Lo escribe
-                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), conditionalItem); 
+                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
