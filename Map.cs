@@ -64,13 +64,16 @@ namespace AdventureGame
 
         public void AddRoom(int nRoom, string name, string description)
         {
-            if (nRoom >= rooms.Length) //si nRoom no cabe
-                Console.WriteLine("No se puede añadir la habitación.");
-            else // añadimos room
+
+            if (nRoom < rooms.Length) // si nRoom cabe
             {
                 Room newRoom = new(name, description, maxRoutes);
                 rooms[nRoom] = newRoom;
                 nRooms++;
+            }
+            else // si no
+            {
+                Console.WriteLine("No se puede añadir la habitación.");
             }
         }
 
@@ -99,20 +102,34 @@ namespace AdventureGame
 
         #region 5. Lectura y almacenamiento de datos
         public void SetItemsRooms()
-        {
+        {   // Recorre el array de items del mapa, añadiendo cada uno a su habitación de inicio.
             for (int i = 0; i < items.Length; i++) // recorre el array de ítems del mapa
                 AddItemRoom(items[i].initialRoom, GetItemIndex(items[i].name)); // añade cada item a su habitación inicial
         }
 
         public void WriteMap()
-        {
+        {   // Escribe en pantalla toda la información del mapa.
             for (int i = 0; i < nRooms; i++)
-            {
-                //Console.WriteLine("Room " + n + ": " + rooms[n].name);    // nombre de cada room
-                //Console.WriteLine(rooms[n].description);                  //descripcion de cada room
-                Console.WriteLine("Directions: " );                         //direccion ?¿?¿ no se como implementarlo
-                Console.WriteLine("Items: " + rooms[i].GetArrayItems());    //items de cada habitacion
-                Console.WriteLine();                                        //linea en blanco (estetica)
+            {                                               // HABITACIONES DEL MAPA
+                Console.WriteLine("Habitación: "    + rooms[i].name //WIP: esto debería ser con GetInfo() pero bueno
+                                + " Descripción: "   + rooms[i].description
+                                + " Direcciones: ");
+
+                for (int j = 0; j < rooms[i].nRoutes; j++)  // RUTAS DE LA HABITACIÓN
+                    Console.WriteLine("\t" + rooms[i].routes[j].direction 
+                                    + "\t" + rooms[i].routes[j].destRoom
+                                    + "\t" + rooms[i].routes[j].conditionalItem);
+
+                // WIP:
+                int nItems = rooms[i].GetArrayItems().Length; // es posible que esto de problemas
+                //int[] items = rooms[i].GetArrayItems();
+                if (nItems > 0) // si hay ítems en la habitación
+                    for (int k = 0; k < nItems; k++)        // ÍTEMS DE LA HABITACIÓN
+                    {
+                        //Console.WriteLine("Ítems: " + GetItemsRoom(i));
+                    }
+
+                Console.WriteLine(); // línea en blanco estética
             }
         }
         #endregion

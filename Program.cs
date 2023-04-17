@@ -17,6 +17,8 @@ namespace AdventureGame
             Map map = new();
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
+            map.SetItemsRooms();
+            map.WriteMap();
         }
 
         #region Métodos Read
@@ -29,9 +31,6 @@ namespace AdventureGame
                 name    = sr.ReadLine()!;
                 desc    = sr.ReadLine()!;
                 iniRoom = sr.ReadLine()!;
-                Console.WriteLine("Item name: " + name      + "   " 
-                                + "Descr: "     + desc      + "   " 
-                                + "InitRoom: "  + iniRoom);
                 sr.ReadLine();
                 map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
             }
@@ -44,21 +43,18 @@ namespace AdventureGame
             while (!f.EndOfStream)
             { // mientras siga el documento
                 int n = int.Parse(f.ReadLine()!); // número de la habitación
-                ReadRoom(ref f, n, map); // lee esta habitación
+                ReadRoom(ref f, n, map);          // lee esta habitación
             }
             f.Close();
         }
 
         static private void ReadRoom(ref StreamReader f, int n, Map map)
-        { //Creo que n ya se lee correctamente
+        { // (- 1 porque empieza en el 1)
             string name, desc;
             name = f.ReadLine()!;
             desc = f.ReadLine()!;
-            Console.WriteLine("Room: "  + n     + "   "
-                            + "Name: "  + name  + "   "
-                            + "Descr: " + desc);
             f.ReadLine();                                            // Línea separatoria "------"
-            map.AddRoom(n, name, desc);                              // Añade al mapa la habitación leída
+            map.AddRoom(n - 1, name, desc);                              // Añade al mapa la habitación leída
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
@@ -69,12 +65,7 @@ namespace AdventureGame
                 if (bits.Length > 2)                                      // Si tiene CondItem 
                     condItem = bits[2];                                   // Se lo añade
                 
-                newline = "Route from room " + n 
-                        + " to room "        + bits[1]
-                        + ", direction "     + bits[0] 
-                        + ". CondItem: "     + condItem;              
-                Console.WriteLine(newline);                               // Lo escribe
-                map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
+                map.AddRouteRoom(n - 1, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
