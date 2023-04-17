@@ -67,13 +67,13 @@ namespace Listas{
 		// Conversion a string
         // método ToString que se invoca implícitamente cuando se hace Console.Write
         public override string ToString() { 
-			string salida = "\nLista: ";						
+			string salida = "Ítems: ";						
 			Nodo aux = pri;
 			while (aux!=null) {
 				salida += aux.dato + " ";
 				aux = aux.sig;
 			}
-			salida += "\n\n";
+			//salida += "\n\n";
 			return salida;
         }
 

@@ -97,7 +97,7 @@ namespace AdventureGame
 
         public string GetItemsRoom(int nRoom)
         {
-            return rooms[nRoom].GetArrayItems().ToString();
+            return rooms[nRoom].GetStringItems();
         }
 
         #region 5. Lectura y almacenamiento de datos
@@ -110,26 +110,18 @@ namespace AdventureGame
         public void WriteMap()
         {   // Escribe en pantalla toda la información del mapa.
             for (int i = 0; i < nRooms; i++)
-            {                                               // HABITACIONES DEL MAPA
-                Console.WriteLine("Habitación: "    + rooms[i].name //WIP: esto debería ser con GetInfo() pero bueno
-                                + " Descripción: "   + rooms[i].description
-                                + " Direcciones: ");
+            {                                               
+                Console.Write(GetInfoRoom(i));              // HABITACIONES DEL MAPA
 
-                for (int j = 0; j < rooms[i].nRoutes; j++)  // RUTAS DE LA HABITACIÓN
+                Console.WriteLine("Direcciones:");          // DIRECCIONES DE LA HABITACIÓN
+                for (int j = 0; j < rooms[i].nRoutes; j++)  
                     Console.WriteLine("\t" + rooms[i].routes[j].direction 
                                     + "\t" + rooms[i].routes[j].destRoom
                                     + "\t" + rooms[i].routes[j].conditionalItem);
 
-                // WIP:
-                int nItems = rooms[i].GetArrayItems().Length; // es posible que esto de problemas
-                //int[] items = rooms[i].GetArrayItems();
-                if (nItems > 0) // si hay ítems en la habitación
-                    for (int k = 0; k < nItems; k++)        // ÍTEMS DE LA HABITACIÓN
-                    {
-                        //Console.WriteLine("Ítems: " + GetItemsRoom(i));
-                    }
-
-                Console.WriteLine(); // línea en blanco estética
+                if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
+                    Console.WriteLine(GetItemsRoom(i));     // ÍTEMS DE LA HABITACIÓN
+                Console.WriteLine();
             }
         }
         #endregion

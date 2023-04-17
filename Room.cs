@@ -56,12 +56,19 @@ namespace AdventureGame
 
         public string GetInfo()
         {
-            return name + "\n" + description + "\n";
+            return "Habitación: "   + name 
+               + "\nDescripción: "  + description 
+               + "\n";
         }
 
         public int[] GetArrayItems()
         {
             return items.ToArray();
+        }
+
+        public string GetStringItems() // MÉTODO NUEVO: ILEGAL??
+        {
+            return items.ToString();
         }
 
         #region 6. Acciones del Jugador
