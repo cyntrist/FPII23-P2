@@ -19,7 +19,7 @@ namespace AdventureGame
             ReadRooms(ROOMS_FILE, map);
         }
 
-        #region métodos
+        #region Métodos Read
         static private void ReadInventory(string file, Map map)
         {
             StreamReader sr = new(file);

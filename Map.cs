@@ -19,6 +19,7 @@ namespace AdventureGame
         public Item[] items; // array de items en el juego indexados por orden de aparición en el archivo
         int nItems; // número de ítems = índice la primera posición libre en items
         int maxRoutes; // número máximo de rutas por habitación
+        //aqui se deberia iniciar Lista?
 
         public Map(int maxRooms = 100, int maxRts = 10, int maxItems = 20)
         {
