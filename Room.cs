@@ -4,6 +4,7 @@
 using AdventureGame;
 using Listas;
 using System.Diagnostics;
+using static AdventureGame.Map;
 
 namespace AdventureGame
 {
@@ -72,7 +73,10 @@ namespace AdventureGame
 
         #region 6. Acciones del Jugador
         public int Move(string dir, ListaEnlazada inventory)
-        {
+        { // devuelve la habitación de destino en la dirección dir, si es posible el movimiento.
+          // Para ello busca la primera ruta en esa dirección que no requiera ítem condicional,
+          // o bien, requiera un ítem presente en la lista inventory. Si existe tal ruta
+          // devuelve la habitación de destino correspondiente; en otro caso devuelve -1.
             int room = -1; // Por si no se encuentra room
 
             //Cogemos dir y buscamos en el array routes si dir es igual a algun nombre de la lista
@@ -104,7 +108,8 @@ namespace AdventureGame
         }
 
         public bool RemoveItem(int it)
-        {
+        { // elimina el ítem de índice it de la lista de ítems de la habitación, si existe.
+          // En ese caso devuelve true, en otro caso false.
             bool retorno = false;
             if (items.BuscaDato(it)) // si el elemento está en la lista
             {  

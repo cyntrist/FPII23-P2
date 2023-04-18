@@ -3,8 +3,10 @@
 
 using AdventureGame;
 using Listas;
+using System.Runtime.ConstrainedExecution;
 using System.Xml.Linq;
 using static AdventureGame.Map;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdventureGame
 {
@@ -132,7 +134,9 @@ namespace AdventureGame
 
         #region 6. Acciones del Jugador
         public bool TakeItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
-        {
+        { // busca el ítem de nombre itemName en la habitación nRoom.
+          // Si está lo elimina de dicha habitación, lo añade a inventory y devuelve true;
+          // en otro caso devuelve false.
             bool retorno = false;
             int index = GetItemIndex(itemName); // índice general del ítem a buscar
             int[] roomItems = rooms[nRoom].GetArrayItems(); // índices de los ítems en la habitacion
@@ -150,7 +154,8 @@ namespace AdventureGame
             return retorno;
         }
         public bool DropItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
-        {
+        { // busca el ítem de nombre itemName en inventory. Si está lo elimina de dicha lista,
+          // lo añade a la habitación nRoom y devuelve true; en otro caso devuelve false.
             bool retorno = false;
             int index = GetItemIndex(itemName); // índice general del ítem
             if (inventory.BuscaDato(index)) // si el ítem está en el inventario
@@ -162,14 +167,18 @@ namespace AdventureGame
             return retorno;
         }
         public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
-        {
-            ListaEnlazada retorno = new();
+        { // intenta el movimiento desde la habitación nRoom en la dirección dir y devuelve una lista
+          // con las habitaciones visitadas al hacer ese movimiento (nótese que puede ser más de una
+          // debido a los movimientos forzados). Para ello intenta el primer movimiento; si es posible,
+          // mientras la habitación destino sea de movimiento forzado, realiza los siguientes movimientos
+          // y va guardando los sucesivos números de habitación en una lista, que devolverá al final.
+                        ListaEnlazada retorno = new();
             rooms[nRoom].Move(dir, inventory);
             retorno.InsertaFinal(nRoom); //nRoom?
             return retorno;
         }
         public string GetItemsInfo(ListaEnlazada inventory)
-        {
+        { // devuelve un string con el nombre y la descripción de los ítems de inventory.
             return inventory.ToString();
         }
         #endregion
