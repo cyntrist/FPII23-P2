@@ -25,7 +25,8 @@ namespace AdventureGame
         int maxRoutes; // número máximo de rutas por habitación
 
         public Map(int maxRooms = 100, int maxRts = 10, int maxItems = 20)
-        {
+        { // crea los arrays rooms e items de tamaños maxRooms y maxItems, con 0 habitaciones y 0 ítems.
+          // Además inicializa el atributo maxRoutes = maxRts.
             rooms = new Room[maxRooms];
             nRooms = 0;
             maxRoutes = maxRts;
@@ -35,7 +36,7 @@ namespace AdventureGame
 
         public void AddItemMap(string name, string description, int iniRoom)
         // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
-        //en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
+        // en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
         {
             if (nItems < items.Length) // si hay espacio
             {
@@ -55,8 +56,7 @@ namespace AdventureGame
 
         private int GetItemIndex(string name)
         { // busca el ítem name en el array de ítems y devuelve
-          // su posición en dicho array; -1 si no existe tal ítem.
-          //            no se como hacerlo usando BuscaDato() ???
+          // su posición en dicho array; -1 si no existe tal ítem. buscadato()??
             int index = 0;
             while (index < items.Length && items[index].name != name) // solucionado error de salida de array
                 index++;
@@ -68,7 +68,7 @@ namespace AdventureGame
         }
 
         public void AddRoom(int nRoom, string name, string description)
-        {
+        { // añade la habitación nRoom al mapa con el nombre y la descripción dados.
             if (nRoom < rooms.Length) // si nRoom cabe
             {
                 Room newRoom = new(name, description, maxRoutes);
@@ -80,7 +80,9 @@ namespace AdventureGame
         }
 
         public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
-        {
+        { // añade a la habitación nRoom una nueva ruta con dirección dir y habitación destino destRoom.
+          // El nombre del ítem condicional viene dado como string (cadena vacía si no hay tal ítem);
+          // hay que obtener su índice con GetItemIndex para invocar al método AddRoute de la clase Room.
             int condicion = -1; // si no tiene condItem, se queda en 0 (no se si tiene que ser 0???)
             if (condItem != null || condItem != "") // si tiene condItem
                 condicion = GetItemIndex(condItem); // se lo asigna a la variable
@@ -88,17 +90,17 @@ namespace AdventureGame
         }
 
         public void AddItemRoom(int nRoom, int itemId)
-        {
+        { // añade el ítem itemId a la habitación nRoom.
             rooms[nRoom].AddItem(itemId);
         }
 
         public string GetInfoRoom(int nRoom)
-        {
+        { // devuelve una cadena de texto con el nombre y la descripción de la habitación nRoom.
             return rooms[nRoom].GetInfo();
         }
 
         public string GetItemsRoom(int nRoom)
-        {
+        { // devuelve un string con la información de los ítems de la habitación nRoom.
             return rooms[nRoom].GetStringItems();
         }
 
@@ -106,7 +108,6 @@ namespace AdventureGame
         public void SetItemsRooms()
         {   // Recorre el array de items del mapa, añadiendo cada uno a su habitación de inicio.
             int i = 0;
-            // for (i = 0; i < items.Length; i++) // ESTO ESTA MAL porque recorre espacios vacíos
             while (i < items.Length && items[i].name != null) // hasta que se acabe el array o encuentre un elto vacío
             {
                 AddItemRoom(items[i].initialRoom, GetItemIndex(items[i].name)); // añade cada item a su habitación inicial
@@ -119,15 +120,15 @@ namespace AdventureGame
             {
                 Console.Write(GetInfoRoom(i));              // HABITACIONES DEL MAPA
 
-                Console.WriteLine("Direcciones:");          // DIRECCIONES DE LA HABITACIÓN
+                Console.WriteLine("Directions:");          // DIRECCIONES DE LA HABITACIÓN
                 for (int j = 0; j < rooms[i].nRoutes; j++)
                     Console.WriteLine("\t" + rooms[i].routes[j].direction
                                     + "\t" + rooms[i].routes[j].destRoom
                                     + "\t" + rooms[i].routes[j].conditionalItem);
 
                 if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
-                    Console.WriteLine(GetItemsRoom(i));     // ÍTEMS DE LA HABITACIÓN
-                Console.WriteLine();
+                    Console.WriteLine("Item" + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
+                Console.WriteLine(); 
             }
         }
         #endregion

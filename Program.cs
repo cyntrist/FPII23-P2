@@ -22,8 +22,9 @@ namespace AdventureGame
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
             map.SetItemsRooms();
-            //map.WriteMap();
+            map.WriteMap();
 
+            Console.WriteLine("ADVENTURE");
             while (true) // bucle ppal.
             {
                 Console.WriteLine(map.GetInfoRoom(playerRoom));
@@ -106,15 +107,18 @@ namespace AdventureGame
                 case "ITEMS": // muestra los ítems de la habitación actual
                     Console.WriteLine(map.GetItemsRoom(playerRoom));
                     break;
-                case "TAKE " + "<item>": // si el item está en habitación actual lo recoge
-                                         // y lo añade al inventario del jugador;
-                                         // mensaje de error en otro caso
-                    // no se muy bien como hacer lo del string comando
+                case "TAKE": // si el item está en habitación actual lo recoge
+                             // y lo añade al inventario del jugador;
+                             // mensaje de error en otro caso
+                    if (words[1] != null) // si hay una 2ª palabra
+                    {
+                        //map.GetItemsRoom
+                    }
                     break;
-                case "DROP " + "<item>": // si el ítem está en el inventario del jugador,
+                case "DROP": // si el ítem está en el inventario del jugador,
                                          // lo elimina del inventario y lo deja en la habitación actual;
                                          // mensaje de error en otro caso
-                    // no se muy bien como hacer lo del string comando
+                    // se vienen cositas
                     break;
                 default: // se interpreta como dirección de movimiento,
                          // que se gestionará con el método correspondiente de Map.

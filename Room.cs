@@ -55,8 +55,8 @@ namespace AdventureGame
 
         public string GetInfo()
         {
-            return "Habitación: "   + name 
-               + "\nDescripción: "  + description 
+            return "Room: "   + name 
+               + "\nDescription: "  + description 
                + "\n";
         }
 
