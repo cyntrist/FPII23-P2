@@ -116,12 +116,12 @@ namespace AdventureGame
         public void WriteMap()
         {   // Escribe en pantalla toda la información del mapa.
             for (int i = 0; i < nRooms; i++)
-            {                                               
+            {
                 Console.Write(GetInfoRoom(i));              // HABITACIONES DEL MAPA
 
                 Console.WriteLine("Direcciones:");          // DIRECCIONES DE LA HABITACIÓN
-                for (int j = 0; j < rooms[i].nRoutes; j++)  
-                    Console.WriteLine("\t" + rooms[i].routes[j].direction 
+                for (int j = 0; j < rooms[i].nRoutes; j++)
+                    Console.WriteLine("\t" + rooms[i].routes[j].direction
                                     + "\t" + rooms[i].routes[j].destRoom
                                     + "\t" + rooms[i].routes[j].conditionalItem);
 
@@ -133,7 +133,7 @@ namespace AdventureGame
         #endregion
 
         #region 6. Acciones del Jugador
-        
+
         // public bool TakeItemRoom(int nRoom, string itemName, List inventory)
         // {
 

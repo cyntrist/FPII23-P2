@@ -12,10 +12,7 @@ namespace AdventureGame
         { // tipo para las rutas
             public string direction;
             public int destRoom, // habitación destino de la ruta
-            conditionalItem; // índice del ítem condicional (al array de ítems de Map)
-
-            //public static bool operator ==(Route r1, Route r2) { return false; }
-            //public static bool operator !=(Route r1, Route r2) { return false; }
+                       conditionalItem; // índice del ítem condicional (al array de ítems de Map)
         }
 
         public string name, description; // nombre y descripción de la habitación leídos de CrowtherRooms
@@ -80,19 +77,14 @@ namespace AdventureGame
             //Cogemos dir y buscamos en el array routes si dir es igual a algun nombre de la lista
             //en ese caso, se lee el numero que tiene a la derecha que sera el num adonde le lleve el jugador
 
-            for(int i = 0; i < routes.Length ; i++)
+            for (int i = 0; i < routes.Length ; i++)
             {
-                if(routes[i].direction == dir && ) //si dir es igual a una de las posibles rutas
+                if (routes[i].direction == dir) //si dir es igual a una de las posibles rutas
                 {
-                    if(routes[i].conditionalItem == -1) //si no hay condItem
-                    {
+                    if (routes[i].conditionalItem == -1) //si no hay condItem
                         room = routes[i].destRoom; //vamos a la room destino
-                    }
-                    else
-                    {
-                        //mirar cond item e ir a la room respectiva
-                        //usar GetItemIndex ?
-                    }
+                    else if (inventory.BuscaDato(routes[i].conditionalItem)) // si sí lo hay y lo tiene en el inv
+                        room = routes[i].destRoom; //vamos a la room destino
                 }
             }
             return room;
@@ -103,12 +95,13 @@ namespace AdventureGame
         }*/
         public bool RemoveItem(int it)
         {
+            bool retorno = false;
             if (items.BuscaDato(it)) // si el elemento está en la lista
             {  
                 items.EliminaElto(it); // lo eliminamos
-                return true;           //y devuelve true
+                retorno = true;           //y devuelve true
             } 
-            else return false;   // si no esta devuelve false
+            return retorno;   // si no esta devuelve false
         }
         #endregion
     }
