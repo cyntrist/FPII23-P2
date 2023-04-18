@@ -139,18 +139,21 @@ namespace AdventureGame
           // Si está lo elimina de dicha habitación, lo añade a inventory y devuelve true;
           // en otro caso devuelve false.
             bool retorno = false;
-            int index = GetItemIndex(itemName); // índice general del ítem a buscar
             int[] roomItems = rooms[nRoom].GetArrayItems(); // índices de los ítems en la habitacion
 
-            int i = 0; // contador
-            while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
-                i++;
-
-            if (roomItems[i] == index) // si está el ítem en la habitación
+            if (roomItems.Length > 0) // si la habitación tiene objetos
             {
-                rooms[nRoom].RemoveItem(index); // lo elimina de la habitación
-                inventory.InsertaFinal(index); // lo añade al inventario
-                retorno = true;
+                int index = GetItemIndex(itemName); // índice general del ítem a buscar
+                int i     = 0;                      // contador
+                while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
+                    i++;
+
+                if (roomItems[i] == index) // si está el ítem en la habitación
+                {
+                    rooms[nRoom].RemoveItem(index); // lo elimina de la habitación
+                    inventory.InsertaFinal(index); // lo añade al inventario
+                    retorno = true;
+                }
             }
             return retorno;
         }
