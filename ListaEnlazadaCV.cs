@@ -2,7 +2,7 @@
 
 namespace Listas{
 	// listas enlazadas de ENTEROS (fácilmente adaptable a cualquier otro tipo)
-	class ListaEnlazada{
+	public class ListaEnlazada{
 
 		// CLASE NODO (clase privada para los nodos de la lista)
 		private class Nodo{
