@@ -74,9 +74,7 @@ namespace AdventureGame
                 nRooms++;
             }
             else // si no
-            {
                 Console.WriteLine("No se puede añadir la habitación.");
-            }
         }
 
         public void AddRouteRoom(int nRoom, string dir, int destRoom, string condItem)
@@ -134,22 +132,44 @@ namespace AdventureGame
 
         #region 6. Acciones del Jugador
 
-        // public bool TakeItemRoom(int nRoom, string itemName, List inventory)
-        // {
+        public bool TakeItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
+        {
+            bool retorno = false;
+            int index = GetItemIndex(itemName); // índice general del ítem a buscar
+            int[] roomItems = rooms[nRoom].GetArrayItems(); // índices de los ítems en la habitacion
 
-        // }
-        // public bool DropItemRoom(int nRoom, string itemName, List inventory)
-        // {
+            int i = 0; // contador
+            while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
+                i++;
 
-        // }
-        // public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
-        // {
-
-        // }
-        // public string GetItemsInfo(ListaEnlazada inventory)
-        // {
-
-        // }
+            if (roomItems[i] == index) // si está el ítem en la habitación
+            {
+                rooms[nRoom].RemoveItem(index); // lo elimina de la habitación
+                inventory.InsertaFinal(index); // lo añade al inventario
+                retorno = true;
+            }
+            return retorno;
+        }
+        public bool DropItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
+        {
+            bool retorno = false;
+            int index = GetItemIndex(itemName); // índice general del ítem
+            if (inventory.BuscaDato(index)) // si el ítem está en el inventario
+            {
+                inventory.EliminaElto(index);
+                rooms[nRoom].AddItem(index);
+                retorno = true;
+            }
+            return retorno;
+        }
+        public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
+        {
+            return null;
+        }
+        public string GetItemsInfo(ListaEnlazada inventory)
+        {
+            return inventory.ToString();
+        }
         #endregion
     }
 }

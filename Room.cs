@@ -97,7 +97,8 @@ namespace AdventureGame
             int i = 0;
             while (i < nRoutes && routes[i].direction != "FORCED") // hasta que encuentre una ruta forzada o acabe
                 i++; // lo sigue recorriendo
-            if (routes[i].direction == "FORCED") // si cuando acaba, su dirección es forzada
+            if (i < nRoutes) // si cuando acaba es menor o igual que el tamaño del array, lo ha encontrado
+            // qué condicion es mejor, ésta o -> if (routes[i].direction == "FORCED") ???
                 retorno = true; // devuelve true
             return retorno; // si no, false
         }
