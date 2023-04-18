@@ -18,16 +18,16 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
-            int playerRoom          = 1;
+            int playerRoom          = 3;
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
             map.SetItemsRooms();
-            map.WriteMap();
+            //map.WriteMap();
 
             Console.WriteLine("ADVENTURE");
+            Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
             while (true) // bucle ppal.
             {
-                Console.WriteLine(map.GetInfoRoom(playerRoom));
                 Console.Write("> ");
                 string input = Console.ReadLine()!;
                 ProcessCommand(map, input, playerRoom, inventory);
@@ -86,45 +86,43 @@ namespace AdventureGame
         static void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-
-            switch (words[0])
-            {
-                case "HELP": // muestra la ayuda del juego
-                    Console.WriteLine("COMMANDS: "
-                                    + "\n\tInventory: shows the content of your inventory."
-                                    + "\n\tLook: shows the information of the current room."
-                                    + "\n\tItems: shows the items in the current room."
-                                    + "\n\tTake <item>: moves the item in the room to your inventory."
-                                    + "\n\tDrop <item>: moves the item in your inventory to the current room."
-                                    + "\n\tMove <direction>: moves you to the specified direction."); 
-                    break;
-                case "INVENTORY": // muestra el inventario actual del jugador
-                    Console.WriteLine(inventory.ToString());
-                    break;
-                case "LOOK": // muestra la información de la habitación actual
-                    Console.WriteLine(map.GetInfoRoom(playerRoom));
-                    break;
-                case "ITEMS": // muestra los ítems de la habitación actual
-                    Console.WriteLine(map.GetItemsRoom(playerRoom));
-                    break;
-                case "TAKE": // si el item está en habitación actual lo recoge
-                             // y lo añade al inventario del jugador;
-                             // mensaje de error en otro caso
-                    if (words[1] != null) // si hay una 2ª palabra
-                    {
-                        //map.GetItemsRoom
-                    }
-                    break;
-                case "DROP": // si el ítem está en el inventario del jugador,
-                                         // lo elimina del inventario y lo deja en la habitación actual;
-                                         // mensaje de error en otro caso
-                    // se vienen cositas
-                    break;
-                default: // se interpreta como dirección de movimiento,
-                         // que se gestionará con el método correspondiente de Map.
-                    map.Move(playerRoom, words[0], inventory);
-                    break;
-            }
+            if (words.Length > 0) 
+                switch (words[0])
+                {
+                    case "HELP": // muestra la ayuda del juego
+                        Console.WriteLine("COMMANDS: "
+                                        + "\n\tInventory: shows the content of your inventory."
+                                        + "\n\tLook: shows the information of the current room."
+                                        + "\n\tItems: shows the items in the current room."
+                                        + "\n\tTake <item>: moves the item in the room to your inventory."
+                                        + "\n\tDrop <item>: moves the item in your inventory to the current room."
+                                        + "\n\t<direction>: moves you to the specified direction."); 
+                        break;
+                    case "INVENTORY": // muestra el inventario actual del jugador
+                        Console.WriteLine("Inventory " + inventory.ToString());
+                        break;
+                    case "LOOK": // muestra la información de la habitación actual
+                        Console.WriteLine(map.GetInfoRoom(playerRoom));
+                        break;
+                    case "ITEMS": // muestra los ítems de la habitación actual
+                        Console.WriteLine("Room " + map.GetItemsRoom(playerRoom));
+                        break;
+                    case "TAKE": // si el item está en habitación actual lo recoge
+                                 // y lo añade al inventario del jugador;
+                                 // mensaje de error en otro caso
+                        if (words[1] != null) // si hay una 2ª palabra
+                            map.TakeItemRoom(playerRoom, words[1], inventory); 
+                        break;
+                    case "DROP": // si el ítem está en el inventario del jugador,
+                                 // lo elimina del inventario y lo deja en la habitación actual;
+                                 // mensaje de error en otro caso
+                        /////////////////// se vienen cositas
+                        break;
+                    default: // se interpreta como dirección de movimiento,
+                             // que se gestionará con el método correspondiente de Map.
+                        map.Move(playerRoom, words[0], inventory); /////////////// hay que acabar move
+                        break;
+                }
             Console.WriteLine(); // línea vacía estética de separación
         }
         #endregion

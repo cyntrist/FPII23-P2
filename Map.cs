@@ -127,7 +127,7 @@ namespace AdventureGame
                                     + "\t" + rooms[i].routes[j].conditionalItem);
 
                 if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
-                    Console.WriteLine("Item" + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
+                    Console.WriteLine("Item " + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
                 Console.WriteLine(); 
             }
         }
@@ -146,7 +146,7 @@ namespace AdventureGame
             while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
                 i++;
 
-            if (roomItems[i] == index) // si está el ítem en la habitación
+            if (i < roomItems.Length) // si no se ha salido del array es que lo ha encontrado
             {
                 rooms[nRoom].RemoveItem(index); // lo elimina de la habitación
                 inventory.InsertaFinal(index); // lo añade al inventario
