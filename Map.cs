@@ -146,7 +146,7 @@ namespace AdventureGame
             while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
                 i++;
 
-            if (i < roomItems.Length) // si no se ha salido del array es que lo ha encontrado
+            if (roomItems[i] == index) // si está el ítem en la habitación
             {
                 rooms[nRoom].RemoveItem(index); // lo elimina de la habitación
                 inventory.InsertaFinal(index); // lo añade al inventario
@@ -173,10 +173,14 @@ namespace AdventureGame
           // debido a los movimientos forzados). Para ello intenta el primer movimiento; si es posible,
           // mientras la habitación destino sea de movimiento forzado, realiza los siguientes movimientos
           // y va guardando los sucesivos números de habitación en una lista, que devolverá al final.
-                        ListaEnlazada retorno = new();
-            rooms[nRoom].Move(dir, inventory);
-            retorno.InsertaFinal(nRoom); //nRoom?
-            return retorno;
+            
+            ListaEnlazada visitadas = new(); //creamos lista de habitaciones visitadas
+
+            while(rooms[nRooms].Move(dir, inventory) != -1) //mientras movimiento funciona
+            {
+                visitadas.InsertaFinal(nRoom); //añadimos room
+            }
+            return visitadas; //y devolvemos lista
         }
         public string GetItemsInfo(ListaEnlazada inventory)
         { // devuelve un string con el nombre y la descripción de los ítems de inventory.
