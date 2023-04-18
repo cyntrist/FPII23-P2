@@ -3,6 +3,7 @@
 
 using AdventureGame;
 using Listas;
+using System.Diagnostics;
 
 namespace AdventureGame
 {
@@ -77,7 +78,7 @@ namespace AdventureGame
             //Cogemos dir y buscamos en el array routes si dir es igual a algun nombre de la lista
             //en ese caso, se lee el numero que tiene a la derecha que sera el num adonde le lleve el jugador
 
-            for (int i = 0; i < routes.Length ; i++)
+            for (int i = 0; i < nRoutes; i++)
             {
                 if (routes[i].direction == dir) //si dir es igual a una de las posibles rutas
                 {
@@ -89,10 +90,16 @@ namespace AdventureGame
             }
             return room;
         }
-        /*public bool ForcedMove() //comprueba si la habitacion tiene al menos una ruta
-        {
-
-        }*/
+        public bool ForcedMove() //comprueba si la habitacion tiene al menos una ruta
+        { // (por definición, si una es forzada, todas deben serlo).
+            bool retorno = false;
+            int i = 0;
+            while (i < nRoutes && routes[i].direction != "FORCED") // hasta que encuentre una ruta forzada o acabe
+                i++; // lo sigue recorriendo
+            if (routes[i].direction == "FORCED") // si cuando acaba, su dirección es forzada
+                retorno = true; // devuelve true
+            return retorno; // si no, false
+        }
         public bool RemoveItem(int it)
         {
             bool retorno = false;
