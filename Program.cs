@@ -16,16 +16,20 @@ namespace AdventureGame
 
         static void Main()
         {
-            Map map = new();
+            Map map                 = new();
             ListaEnlazada inventory = new();
+            int playerRoom          = 1;
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
             map.SetItemsRooms();
-            map.WriteMap();
+            //map.WriteMap();
 
             while (true) // bucle ppal.
             {
-
+                Console.WriteLine(map.GetInfoRoom(playerRoom));
+                Console.Write("> ");
+                string input = Console.ReadLine()!;
+                ProcessCommand(map, input, playerRoom, inventory);
             }
         }
 
@@ -50,7 +54,7 @@ namespace AdventureGame
             StreamReader f = new (file);
             while (!f.EndOfStream)
             { // mientras siga el documento
-                int n = int.Parse(f.ReadLine()!) - 1; // número de la habitación (- 1 porque empieza en el 1)
+                int n = int.Parse(f.ReadLine()!); // número de la habitación (- 1 porque empieza en el 1)
                 ReadRoom(ref f, n, map);          // lee esta habitación
             }
             f.Close();
@@ -78,14 +82,20 @@ namespace AdventureGame
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
 
-        void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
+        static void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
             switch (words[0])
             {
                 case "HELP": // muestra la ayuda del juego
-                    Console.WriteLine("AYUDA: "); // falta ponerla
+                    Console.WriteLine("COMMANDS: "
+                                    + "\n\tInventory: shows the content of your inventory."
+                                    + "\n\tLook: shows the information of the current room."
+                                    + "\n\tItems: shows the items in the current room."
+                                    + "\n\tTake <item>: moves the item in the room to your inventory."
+                                    + "\n\tDrop <item>: moves the item in your inventory to the current room."
+                                    + "\n\tMove <direction>: moves you to the specified direction."); 
                     break;
                 case "INVENTORY": // muestra el inventario actual del jugador
                     Console.WriteLine(inventory.ToString());
@@ -111,6 +121,7 @@ namespace AdventureGame
                     map.Move(playerRoom, words[0], inventory);
                     break;
             }
+            Console.WriteLine(); // línea vacía estética de separación
         }
         #endregion
     }

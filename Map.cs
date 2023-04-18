@@ -113,7 +113,7 @@ namespace AdventureGame
         }
         public void WriteMap()
         {   // Escribe en pantalla toda la información del mapa.
-            for (int i = 0; i < nRooms; i++)
+            for (int i = 1; i < nRooms; i++)
             {
                 Console.Write(GetInfoRoom(i));              // HABITACIONES DEL MAPA
 
