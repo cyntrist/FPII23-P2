@@ -21,7 +21,6 @@ namespace AdventureGame
         public Item[] items; // array de items en el juego indexados por orden de aparición en el archivo
         int nItems; // número de ítems = índice la primera posición libre en items
         int maxRoutes; // número máximo de rutas por habitación
-        //aqui se deberia iniciar Lista?
 
         public Map(int maxRooms = 100, int maxRts = 10, int maxItems = 20)
         {
@@ -114,7 +113,6 @@ namespace AdventureGame
                 i++;
             }
         }
-
         public void WriteMap()
         {   // Escribe en pantalla toda la información del mapa.
             for (int i = 0; i < nRooms; i++)
@@ -135,6 +133,7 @@ namespace AdventureGame
         #endregion
 
         #region 6. Acciones del Jugador
+        
         // public bool TakeItemRoom(int nRoom, string itemName, List inventory)
         // {
 
@@ -143,13 +142,11 @@ namespace AdventureGame
         // {
 
         // }
-
-        // public List Move(int nRoom, string dir, List inventory)
+        // public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
         // {
 
         // }
-
-        // public string GetItemsInfo(List inventory)
+        // public string GetItemsInfo(ListaEnlazada inventory)
         // {
 
         // }

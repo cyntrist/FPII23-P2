@@ -73,14 +73,34 @@ namespace AdventureGame
         }
 
         #region 6. Acciones del Jugador
-        // public int Move(string dir, List inventory)
-        // {
-            
-        // }
-        // public bool ForcedMove()
-        // {
-            
-        // }
+        public int Move(string dir, ListaEnlazada inventory)
+        {
+            int room = -1; // Por si no se encuentra room
+
+            //Cogemos dir y buscamos en el array routes si dir es igual a algun nombre de la lista
+            //en ese caso, se lee el numero que tiene a la derecha que sera el num adonde le lleve el jugador
+
+            for(int i = 0; i < routes.Length ; i++)
+            {
+                if(routes[i].direction == dir && ) //si dir es igual a una de las posibles rutas
+                {
+                    if(routes[i].conditionalItem == -1) //si no hay condItem
+                    {
+                        room = routes[i].destRoom; //vamos a la room destino
+                    }
+                    else
+                    {
+                        //mirar cond item e ir a la room respectiva
+                        //usar GetItemIndex ?
+                    }
+                }
+            }
+            return room;
+        }
+        /*public bool ForcedMove() //comprueba si la habitacion tiene al menos una ruta
+        {
+
+        }*/
         public bool RemoveItem(int it)
         {
             if (items.BuscaDato(it)) // si el elemento está en la lista
