@@ -131,7 +131,6 @@ namespace AdventureGame
         #endregion
 
         #region 6. Acciones del Jugador
-
         public bool TakeItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
         {
             bool retorno = false;
@@ -164,7 +163,10 @@ namespace AdventureGame
         }
         public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
         {
-            return null;
+            ListaEnlazada retorno = new();
+            rooms[nRoom].Move(dir, inventory);
+            retorno.InsertaFinal(nRoom); //nRoom?
+            return retorno;
         }
         public string GetItemsInfo(ListaEnlazada inventory)
         {
