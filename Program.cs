@@ -15,6 +15,7 @@ namespace AdventureGame
         static void Main()
         {
             Map map = new();
+            ListaEnlazada inventory = new();
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
             map.SetItemsRooms();

@@ -90,6 +90,7 @@ namespace AdventureGame
             }
             return room;
         }
+
         public bool ForcedMove() //comprueba si la habitacion tiene al menos una ruta
         { // (por definición, si una es forzada, todas deben serlo).
             bool retorno = false;
@@ -100,6 +101,7 @@ namespace AdventureGame
                 retorno = true; // devuelve true
             return retorno; // si no, false
         }
+
         public bool RemoveItem(int it)
         {
             bool retorno = false;
