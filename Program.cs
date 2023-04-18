@@ -2,10 +2,10 @@
 // Paula Sierra Luque
 
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using AdventureGame;
 using Listas;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdventureGame
 {
@@ -18,51 +18,67 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
-            int playerRoom          = 3;
+            int playerRoom          = 1;
+
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
+
             map.SetItemsRooms();
             //map.WriteMap();
 
-            Console.WriteLine("ADVENTURE");
-            Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
-            while (true) // bucle ppal.
+            Console.WriteLine("ADVENTURE\n" + map.GetInfoRoom(playerRoom) + "\n");
+            while (playerRoom > 0) // bucle ppal.
             {
                 Console.Write("> ");
-                string input = Console.ReadLine()!;
-                ProcessCommand(map, input, playerRoom, inventory);
+                ProcessCommand(map, Console.ReadLine()!, playerRoom, inventory);
             }
         }
 
         #region Métodos Read
         static private void ReadInventory(string file, Map map)
         {
-            StreamReader sr = new(file);
-            while (!sr.EndOfStream)
+            StreamReader sr = null!;
+            try
             {
-                string name, desc, iniRoom;
-                name    = sr.ReadLine()!;
-                desc    = sr.ReadLine()!;
-                iniRoom = sr.ReadLine()!;
-                sr.ReadLine();
-                map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
+                sr = new(file);
+                while (!sr.EndOfStream)
+                {
+                    string name, desc, iniRoom;
+                    name = sr.ReadLine()!;
+                    desc = sr.ReadLine()!;
+                    iniRoom = sr.ReadLine()!;
+                    sr.ReadLine();
+                    map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
+                }
             }
-            sr.Close();
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: " +
+                            $"No se ha encontrado archivo de inventario.\n{fnfe.Message}"); }
+            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
+            catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
+            finally { sr?.Close(); }
         }
 
         static private void ReadRooms(string file, Map map)
         {
-            StreamReader f = new (file);
-            while (!f.EndOfStream)
-            { // mientras siga el documento
-                int n = int.Parse(f.ReadLine()!); // número de la habitación (- 1 porque empieza en el 1)
-                ReadRoom(ref f, n, map);          // lee esta habitación
+            StreamReader f = null!;
+            try
+            {
+                f = new(file);
+                while (!f.EndOfStream)
+                { // mientras siga el documento
+                    int n = int.Parse(f.ReadLine()!); // número de la habitación (- 1 porque empieza en el 1)
+                    ReadRoom(ref f, n, map);          // lee esta habitación
+                }
             }
-            f.Close();
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: " +
+                            $"No se ha encontrado archivo de habitaciones.\n{fnfe.Message}"); }
+            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
+            catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
+            finally { f?.Close(); }
         }
 
         static private void ReadRoom(ref StreamReader f, int n, Map map)
-        { // 
+        { 
             string name, desc;
             name = f.ReadLine()!;
             desc = f.ReadLine()!;
@@ -86,7 +102,7 @@ namespace AdventureGame
         static void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            if (words.Length > 0) 
+            if (words?.Length > 0 ) 
                 switch (words[0])
                 {
                     case "HELP": // muestra la ayuda del juego
@@ -110,13 +126,18 @@ namespace AdventureGame
                     case "TAKE": // si el item está en habitación actual lo recoge
                                  // y lo añade al inventario del jugador;
                                  // mensaje de error en otro caso
-                        if (words[1] != null) // si hay una 2ª palabra
-                            map.TakeItemRoom(playerRoom, words[1], inventory); 
+                        if (words.Length > 1) // si hay una 2ª palabra
+                            if (map.TakeItemRoom(playerRoom, words[1], inventory));
+                            else Console.WriteLine("There is no such item in the room.");
+                        else Console.WriteLine("Please specify an item to take.");
                         break;
                     case "DROP": // si el ítem está en el inventario del jugador,
                                  // lo elimina del inventario y lo deja en la habitación actual;
                                  // mensaje de error en otro caso
-                        /////////////////// se vienen cositas
+                        if (words.Length > 1) // si hay una 2ª palabra
+                            if (map.DropItemRoom(playerRoom, words[1], inventory));
+                            else Console.WriteLine("There is no such item in your inventory.");
+                        else Console.WriteLine("Please specify an item to drop.");
                         break;
                     default: // se interpreta como dirección de movimiento,
                              // que se gestionará con el método correspondiente de Map.

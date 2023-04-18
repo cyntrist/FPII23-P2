@@ -85,7 +85,7 @@ namespace AdventureGame
           // hay que obtener su índice con GetItemIndex para invocar al método AddRoute de la clase Room.
             int condicion = -1; // si no tiene condItem, se queda en 0 (no se si tiene que ser 0???)
             if (condItem != null || condItem != "") // si tiene condItem
-                condicion = GetItemIndex(condItem); // se lo asigna a la variable
+                condicion = GetItemIndex(condItem!); // se lo asigna a la variable
             rooms[nRoom].AddRoute(dir, destRoom, condicion); // añade la ruta
         }
 
