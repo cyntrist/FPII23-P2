@@ -71,14 +71,12 @@ namespace AdventureGame
 
         #region 6. Acciones del Jugador
         public int Move(string dir, ListaEnlazada inventory)
-        { // devuelve la habitación de destino en la dirección dir, si es posible el movimiento.
-          // Para ello busca la primera ruta en esa dirección que no requiera ítem condicional,
-          // o bien, requiera un ítem presente en la lista inventory. Si existe tal ruta
-          // devuelve la habitación de destino correspondiente; en otro caso devuelve -1.
+        // devuelve la habitación de destino en la dirección dir, si es posible el movimiento.
+        // Para ello busca la primera ruta en esa dirección que no requiera ítem condicional,
+        // o bien, requiera un ítem presente en la lista inventory. Si existe tal ruta
+        // devuelve la habitación de destino correspondiente; en otro caso devuelve -1.
+        {             
             int room = -1; // Por si no se encuentra room
-
-            //Cogemos dir y buscamos en el array routes si dir es igual a algun nombre de la lista
-            //en ese caso, se lee el numero que tiene a la derecha que sera el num adonde le lleve el jugador
 
             for (int i = 0; i < nRoutes; i++)
             {
@@ -100,7 +98,7 @@ namespace AdventureGame
             while (i < nRoutes && routes[i].direction != "FORCED") // hasta que encuentre una ruta forzada o acabe
                 i++; // lo sigue recorriendo
             if (i < nRoutes) // si cuando acaba es menor o igual que el tamaño del array, lo ha encontrado
-            // qué condicion es mejor, ésta o -> if (routes[i].direction == "FORCED") ???
+            // qué condicion es mejor, ésta o -> if (routes[i].direction == "FORCED") ----> creo que da igual, podria ser un && como en el while ?
                 retorno = true; // devuelve true
             return retorno; // si no, false
         }
@@ -112,7 +110,7 @@ namespace AdventureGame
             if (items.BuscaDato(it)) // si el elemento está en la lista
             {  
                 items.EliminaElto(it); // lo eliminamos
-                retorno = true;           //y devuelve true
+                retorno = true;        //y devuelve true
             } 
             return retorno;   // si no esta devuelve false
         }
