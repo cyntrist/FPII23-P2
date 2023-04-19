@@ -24,7 +24,7 @@ namespace AdventureGame
             name = nam;
             description = des;
             routes = new Route[maxRts];
-            nRoutes = 0; 
+            nRoutes = 0;
             items = new ListaEnlazada();
         }
 
@@ -60,8 +60,8 @@ namespace AdventureGame
 
         public string GetRouteInfo(int index)  // método nuevo, devuelve la información de la ruta indexada de la habitación
         {
-            return "\t" + routes[index].direction 
-                 + "\t" + routes[index].destRoom 
+            return "\t" + routes[index].direction
+                 + "\t" + routes[index].destRoom
                  + "\t" + routes[index].conditionalItem;
         }
 
@@ -82,7 +82,7 @@ namespace AdventureGame
         // Para ello busca la primera ruta en esa dirección que no requiera ítem condicional,
         // o bien, requiera un ítem presente en la lista inventory. Si existe tal ruta
         // devuelve la habitación de destino correspondiente; en otro caso devuelve -1.
-        {             
+        {
             int room = -1; // Por si no se encuentra room
 
             for (int i = 0; i < nRoutes; i++)
@@ -114,10 +114,10 @@ namespace AdventureGame
           // En ese caso devuelve true, en otro caso false.
             bool retorno = false;
             if (items.BuscaDato(it)) // si el elemento está en la lista
-            {  
+            {
                 items.EliminaElto(it); // lo eliminamos
                 retorno = true;        //y devuelve true
-            } 
+            }
             return retorno;   // si no esta devuelve false
         }
         #endregion

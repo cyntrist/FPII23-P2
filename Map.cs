@@ -2,7 +2,6 @@
 // Paula Sierra Luque
 
 using Listas;
-using System;
 
 namespace AdventureGame
 {
@@ -139,7 +138,7 @@ namespace AdventureGame
 
                 if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
                     Console.WriteLine("Items: " + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
-                Console.WriteLine(); 
+                Console.WriteLine();
             }
         }
         #endregion
@@ -190,7 +189,7 @@ namespace AdventureGame
 
             ListaEnlazada visitadas = new(); // creamos lista de habitaciones visitadas
             int nextRoom = rooms[nRoom].Move(dir, inventory); // intenta el primer movimiento
-            if (nextRoom > -1 ) // si ha sido posible
+            if (nextRoom > -1) // si ha sido posible
             {
                 visitadas.InsertaFinal(nextRoom); // añadimos habitación a la lista
                 if (rooms[nextRoom].ForcedMove()) // si ésta habitacion tiene forzadas, todas sus rutas lo son

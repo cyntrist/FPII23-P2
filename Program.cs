@@ -1,8 +1,8 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using System.Text.RegularExpressions;
 using Listas;
+using System.Text.RegularExpressions;
 
 namespace AdventureGame
 {
@@ -44,7 +44,7 @@ namespace AdventureGame
                 Console.Write("> ");
                 string input = Console.ReadLine()!;
                 ProcessCommand(map, input, ref playerRoom, inventory);
-                if (input.Trim().ToUpper() != "END") 
+                if (input.Trim().ToUpper() != "END")
                     historial += "," + input;
             }
 
@@ -97,7 +97,7 @@ namespace AdventureGame
         }
 
         static void ReadRoom(ref StreamReader f, int n, Map map)
-        { 
+        {
             string name, desc;
             name = f.ReadLine()!;
             desc = f.ReadLine()!;
@@ -109,10 +109,10 @@ namespace AdventureGame
                 newline = Regex.Replace(newline, @"\s+", "/");            // Reemplaza todos los espacios con un solo '/'
                 string[] bits = newline.Split("/");                       // Parte la línea en trozos entre '/'
 
-                string condItem = ""; 
+                string condItem = "";
                 if (bits.Length > 2)                                      // Si tiene CondItem 
                     condItem = bits[2];                                   // Se lo añade
-                
+
                 map.AddRouteRoom(n, bits[0], int.Parse(bits[1]), condItem); // Añade a la habitación en el mapa la ruta leída
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
@@ -134,7 +134,7 @@ namespace AdventureGame
                                         + "\n\tTake <item>: moves the item in the room to your inventory."
                                         + "\n\tDrop <item>: moves the item in your inventory to the room."
                                         + "\n\t<direction>: moves you towards the specified direction."
-                                        + "\n\tEnd: tries to save and finishes the game."); 
+                                        + "\n\tEnd: tries to save and finishes the game.");
                         break;
 
                     case "INVENTORY": // muestra el inventario actual del jugador
@@ -159,7 +159,7 @@ namespace AdventureGame
                                  // y lo añade al inventario del jugador;
                                  // mensaje de error en otro caso
                         if (words.Length > 1) // si hay una 2ª palabra
-                            if (map.TakeItemRoom(playerRoom, words[1], inventory)) 
+                            if (map.TakeItemRoom(playerRoom, words[1], inventory))
                                 Console.WriteLine(words[1] + " taken."); // si sí es un ítem válido
                             else Console.WriteLine("There is no such item in the room."); // si no es un ítem válido
                         else Console.WriteLine("Please specify an item to take."); // si no hay 2ª palabra
@@ -199,13 +199,13 @@ namespace AdventureGame
             Console.WriteLine("Would you like instructions?");
             Console.Write("\n> ");
             string input = Console.ReadLine()!.Trim().ToUpper();
-            if (input == "YES" || input == "Y") 
+            if (input == "YES" || input == "Y")
                 Console.WriteLine("\nSomewhere nearby is Colossal Cave, where others have found fortunes " +
                     "in treasure and gold, though it is rumored that some who enter are never seen again. " +
                     " Magic is said to work in the cave.  I will be your eyes and hands.  Direct me with " +
                     "commands of 1 or 2 words.  Should you get stuck, type \"HELP\" for some general commands.\n");
         }
-    
+
         static string[] ReadCommands()
         { // lee comandos de un archivo dado (uno por línea, por ejemplo) y los ejecuta en secuencia.
             StreamReader sr = null!;
