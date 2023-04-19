@@ -30,7 +30,7 @@ namespace AdventureGame
             while (playerRoom > 0) // bucle ppal.
             {
                 Console.Write("> ");
-                ProcessCommand(map, Console.ReadLine()!, playerRoom, inventory);
+                ProcessCommand(map, Console.ReadLine()!, ref playerRoom, inventory);
             }
         }
 
@@ -101,7 +101,7 @@ namespace AdventureGame
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
         #endregion
-        static void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
+        static void ProcessCommand(Map map, string input, ref int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
             if (words?.Length > 0 ) 
@@ -144,7 +144,8 @@ namespace AdventureGame
                         break;
                     default: // se interpreta como dirección de movimiento,
                              // que se gestionará con el método correspondiente de Map.
-                        map.Move(playerRoom, words[0], inventory); /////////////// hay que acabar move
+                        int[] salas = map.Move(playerRoom, words[0], inventory).ToArray();
+                        playerRoom = salas[^1]; 
                         break;
                 }
             Console.WriteLine(); // línea vacía estética de separación

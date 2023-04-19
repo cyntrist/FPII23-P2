@@ -178,14 +178,14 @@ namespace AdventureGame
           // y va guardando los sucesivos números de habitación en una lista, que devolverá al final.
 
             ListaEnlazada visitadas = new(); // creamos lista de habitaciones visitadas
-            nRoom = rooms[nRoom].Move(dir, inventory); // intenta el primer movimiento
-            if (nRoom > -1 ) // si ha sido posible
+            int nextRoom = rooms[nRoom].Move(dir, inventory); // intenta el primer movimiento
+            if (nextRoom > -1 ) // si ha sido posible
             {
-                visitadas.InsertaFinal(nRoom); // añadimos habitación a la lista
-                if (rooms[nRoom].ForcedMove()) // si ésta habitacion tiene forzadas, todas sus rutas lo son
-                    while (nRoom > -1 && rooms[nRoom].ForcedMove()) // mientras tenga rutas y forzadas
+                visitadas.InsertaFinal(nextRoom); // añadimos habitación a la lista
+                if (rooms[nextRoom].ForcedMove()) // si ésta habitacion tiene forzadas, todas sus rutas lo son
+                    while (nextRoom > -1 && rooms[nextRoom].ForcedMove()) // mientras tenga rutas y forzadas
                     {
-                        nRoom = rooms[nRooms].Move("FORCED", inventory); // movemos a forzado
+                        nextRoom = rooms[nextRoom].Move("FORCED", inventory); // movemos a forzado
                         visitadas.InsertaFinal(nRoom); // añadimos la nueva sala a la lista
                     }
             }
