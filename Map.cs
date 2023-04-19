@@ -103,7 +103,7 @@ namespace AdventureGame
             string info = string.Empty;
             int[] indexes = rooms[nRoom].GetArrayItems();
             for (int i = 0; i < indexes.Length; i++)
-                info += items[indexes[i]].name + " ";
+                info += "\n" + items[indexes[i]].name + ": " + items[indexes[i]].description;
             return info;
         }
 
