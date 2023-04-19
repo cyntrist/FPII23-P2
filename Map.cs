@@ -130,13 +130,11 @@ namespace AdventureGame
         {   // Escribe en pantalla toda la información del mapa.
             for (int i = 1; i < nRooms; i++)
             {
-                Console.Write(GetInfoRoom(i));              // HABITACIONES DEL MAPA
+                Console.WriteLine(GetInfoRoom(i));              // HABITACIONES DEL MAPA
 
-                Console.WriteLine("Directions:");          // DIRECCIONES DE LA HABITACIÓN
-                for (int j = 0; j < rooms[i].nRoutes; j++)
-                    Console.WriteLine("\t" + rooms[i].routes[j].direction
-                                    + "\t" + rooms[i].routes[j].destRoom
-                                    + "\t" + rooms[i].routes[j].conditionalItem);
+                Console.WriteLine("Directions:");               // DIRECCIONES DE LA HABITACIÓN
+                for (int j = 1; j < rooms[i].GetRouteNumber(); j++)
+                    Console.WriteLine(rooms[i].GetRouteInfo(j));
 
                 if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
                     Console.WriteLine("Items: " + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN

@@ -14,9 +14,9 @@ namespace AdventureGame
                        conditionalItem; // índice del ítem condicional (al array de ítems de Map)
         }
 
-        public string name, description; // nombre y descripción de la habitación leídos de CrowtherRooms
-        public Route[] routes; // array de rutas de la habitación
-        public int nRoutes; // número de rutas = índice a la primera ruta libre
+        string name, description; // nombre y descripción de la habitación leídos de CrowtherRooms
+        Route[] routes; // array de rutas de la habitación
+        int nRoutes; // número de rutas = índice a la primera ruta libre
         ListaEnlazada items; // lista de índices de ítems (al array de ítems de Map)
 
         public Room(string nam, string des, int maxRts) //constructora Room
@@ -56,6 +56,18 @@ namespace AdventureGame
         public string GetInfo()
         {
             return name + "\n" + description;
+        }
+
+        public string GetRouteInfo(int index)  // método nuevo, devuelve la información de la ruta indexada de la habitación
+        {
+            return "\t" + routes[index].direction 
+                 + "\t" + routes[index].destRoom 
+                 + "\t" + routes[index].conditionalItem;
+        }
+
+        public int GetRouteNumber() // método nuevo, sólo es un getter de nRoutes para no cambiarle la accesibilidad 
+        {
+            return nRoutes;
         }
 
         public int[] GetArrayItems()
