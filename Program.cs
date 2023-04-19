@@ -32,8 +32,6 @@ namespace AdventureGame
                 Console.Write("> ");
                 ProcessCommand(map, Console.ReadLine()!, ref playerRoom, inventory);
             }
-
-            while(true) { Console.WriteLine("FIN"); }
         }
 
         #region Métodos Read
