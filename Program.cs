@@ -18,7 +18,7 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
-            int playerRoom          = 1;
+            int playerRoom          = 10;
 
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
@@ -142,10 +142,18 @@ namespace AdventureGame
                             else Console.WriteLine("There is no such item in your inventory.");
                         else Console.WriteLine("Please specify an item to drop.");
                         break;
+                    case "END": // sale del programa
+                        playerRoom = -1;
+                        break;
                     default: // se interpreta como dirección de movimiento,
                              // que se gestionará con el método correspondiente de Map.
                         int[] salas = map.Move(playerRoom, words[0], inventory).ToArray();
-                        playerRoom = salas[^1]; 
+                        if (salas.Length > 0)
+                        {
+                            for (int i = 0; i < salas.Length; i++)
+                                Console.WriteLine("\n" + map.GetInfoRoom(salas[i]));
+                            playerRoom = salas[^1];
+                        }
                         break;
                 }
             Console.WriteLine(); // línea vacía estética de separación
