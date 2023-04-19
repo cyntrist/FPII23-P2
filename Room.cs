@@ -28,7 +28,7 @@ namespace AdventureGame
             items = new ListaEnlazada();
         }
 
-        #region Adición
+        #region ADICIÓN
         public void AddRoute(string dir, int desR, int condIt)
         {
             if (nRoutes < routes.Length) // si hay espacio
@@ -52,13 +52,13 @@ namespace AdventureGame
         }
         #endregion
 
-        #region Información
+        #region INFORMACIÓN
         public string GetInfo()
         {
             return name + "\n" + description;
         }
 
-        public string GetRouteInfo(int index)  // método nuevo, devuelve la información de la ruta indexada de la habitación
+        public string GetRouteInfo(int index) // método nuevo, devuelve la información de la ruta indexada de la habitación
         {
             return "\t" + routes[index].direction
                  + "\t" + routes[index].destRoom

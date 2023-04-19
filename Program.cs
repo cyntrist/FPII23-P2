@@ -53,7 +53,7 @@ namespace AdventureGame
             else Console.WriteLine("The game has ended without saving.");
         }
 
-        #region Métodos Read
+        #region LECTURA
         static void ReadInventory(string file, Map map)
         // lee archivo file y escribe informacion en pantalla
         {
@@ -71,8 +71,8 @@ namespace AdventureGame
                     map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
                 }
             }
-            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de inventario.\n{fnfe.Message}"); }
-            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de inventario.\n{fnfe.Message}"); Environment.Exit(0); }
+            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); Environment.Exit(0); }
             catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
             finally { sr?.Close(); }
         }
@@ -90,8 +90,8 @@ namespace AdventureGame
                     ReadRoom(ref f, n, map);          // lee esta habitación
                 }
             }
-            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de habitaciones.\n{fnfe.Message}"); }
-            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de habitaciones.\n{fnfe.Message}"); Environment.Exit(0); }
+            catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); Environment.Exit(0); }
             catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
             finally { f?.Close(); }
         }
@@ -119,6 +119,7 @@ namespace AdventureGame
         }
         #endregion
 
+        #region INTERACCIÓN
         static void ProcessCommand(Map map, string input, ref int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -205,8 +206,10 @@ namespace AdventureGame
                     " Magic is said to work in the cave.  I will be your eyes and hands.  Direct me with " +
                     "commands of 1 or 2 words.  Should you get stuck, type \"HELP\" for some general commands.\n");
         }
+        #endregion
 
-        static string[] ReadCommands()
+        #region EXTENSIONES
+        static string[] ReadCommands() // Extensión 1: Lectura
         { // lee comandos de un archivo dado (uno por línea, por ejemplo) y los ejecuta en secuencia.
             StreamReader sr = null!;
             string[] comandos = null!;
@@ -227,7 +230,7 @@ namespace AdventureGame
             return comandos;
         }
 
-        static bool SaveCommands(string history)
+        static bool SaveCommands(string history) // Extensión 2: Escritura
         { // añade el historial de comandos nuevos (de la sesión de juego actual) al archivo de guardado anterior si existe (acumulativo)
             bool retorno = false;
             StreamWriter sw = null!;
@@ -243,5 +246,6 @@ namespace AdventureGame
             finally { sw?.Close(); }
             return retorno;
         }
+        #endregion
     }
 }

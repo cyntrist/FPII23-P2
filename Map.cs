@@ -29,7 +29,7 @@ namespace AdventureGame
             nItems = 0;
         }
 
-        #region Adición
+        #region ADICIÓN
         public void AddItemMap(string name, string description, int iniRoom)
         // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
         // en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
@@ -78,7 +78,7 @@ namespace AdventureGame
         }
         #endregion
 
-        #region Información
+        #region INFORMACIÓN
         private int GetItemIndex(string name)
         { // busca el ítem name en el array de ítems y devuelve
           // su posición en dicho array; -1 si no existe tal ítem. buscadato()??
@@ -126,6 +126,7 @@ namespace AdventureGame
                 i++;
             }
         }
+
         public void WriteMap()
         {   // Escribe en pantalla toda la información del mapa.
             for (int i = 1; i < nRooms; i++)
@@ -167,6 +168,7 @@ namespace AdventureGame
             }
             return retorno;
         }
+
         public bool DropItemRoom(int nRoom, string itemName, ListaEnlazada inventory)
         { // busca el ítem de nombre itemName en inventory. Si está lo elimina de dicha lista,
           // lo añade a la habitación nRoom y devuelve true; en otro caso devuelve false.
@@ -180,6 +182,7 @@ namespace AdventureGame
             }
             return retorno;
         }
+
         public ListaEnlazada Move(int nRoom, string dir, ListaEnlazada inventory)
         { // intenta el movimiento desde la habitación nRoom en la dirección dir y devuelve una lista
           // con las habitaciones visitadas al hacer ese movimiento (nótese que puede ser más de una
