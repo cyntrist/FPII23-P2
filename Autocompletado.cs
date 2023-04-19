@@ -11,24 +11,21 @@ internal class AutocompletadoComandos
 //con ese prefijo; si el comando es único (no hay ambigüedad) se completa, si hay varios se dan
 //las opciones.
 {
-    private ListaEnlazada listaComandos;
-
-    public AutocompletadoComandos(ListaEnlazada comandos) //constructora
-    {
-        listaComandos = comandos;
-    }
-
-    public ListaEnlazada BuscarComandos(string prefijo)
+    public string BuscarComandos(string prefijo)
     //al pulsar tab, se lee el string y miramos si coincide con algún comando
     {
-        string comando;
-        if
-        return comando;
-    }
-    public bool PulsaTab()
-    {
-        bool tab = false;
+        string retorno = "Write Help to show available commands";
+        string[] comandos = {"Help", "Inventory", "Look", "Items", "Take", "Drop"};
 
-        return tab;
+        for(int i = 0; i < comandos.Length; i++)
+        {
+            if (prefijo.StartsWith(comandos[i]))
+            {
+                retorno = comandos[i];
+            }
+            else retorno = "No commands starting with" + prefijo
+                        + ". Write Help to show available commands";
+        }
+        return retorno;
     }
-}
+  }
