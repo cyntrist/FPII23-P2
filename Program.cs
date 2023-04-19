@@ -9,11 +9,12 @@ namespace AdventureGame
     internal class Program
     {
         const string ITEMS_FILE = @"CrowtherItems.txt",
-                     ROOMS_FILE = @"CrowtherRooms.txt";
+                     ROOMS_FILE = @"CrowtherRooms.txt",
+                  COMMANDS_FILE = @"CommandsFile.txt";
 
         static void Main()
         {
-            Map map                 = new();
+            Map map                 = new();                            // MAPEADO
             ListaEnlazada inventory = new();
             //AutocompletadoComandos autocompletado = new(); //wip
             int playerRoom          = 1;
@@ -24,11 +25,20 @@ namespace AdventureGame
             map.SetItemsRooms();
             //map.WriteMap();
 
-            Console.Write("Welcome to Adventure!! ");
-            Instructions();
-
+            Console.Write("Welcome to Adventure!! "); Instructions();   // INTRODUCCIÓN
             Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
-            while (playerRoom > 0) // bucle ppal.
+
+            string[] commands = ReadCommands();                         // HISTORIAL DE COMANDOS
+            if (commands.Length > 0) // implícitamente comprueba que existe el archivo y tiene por lo menos una línea
+            {
+                for (int i = 0; i < commands.Length; i++) // para cada comando
+                {
+                    Console.WriteLine("> " + commands[i]); // lo muestra
+                    ProcessCommand(map, commands[i], ref playerRoom, inventory); // y lo ejecuta
+                }
+            }
+
+            while (playerRoom > 0)                                      // BUCLE PRINCIPAL
             {
                 Console.Write("> ");
                 ProcessCommand(map, Console.ReadLine()!, ref playerRoom, inventory);
@@ -42,6 +52,8 @@ namespace AdventureGame
                     //autocompletado.BuscarComandos(Console.ReadLine()!);
                 }
             }
+
+            // guardado
         }
 
         #region Métodos Read
@@ -193,6 +205,25 @@ namespace AdventureGame
                     "in treasure and gold, though it is rumored that some who enter are never seen again. " +
                     " Magic is said to work in the cave.  I will be your eyes and hands.  Direct me with " +
                     "commands of 1 or 2 words.  Should you get stuck, type \"HELP\" for some general commands.\n");
+        }
+    
+        static string[] ReadCommands()
+        { // lea comandos de un archivo dado (uno por línea, por ejemplo) y los ejecute en secuencia.
+            StreamReader sr = null!;
+            string[] comandos = new string[File.ReadAllLines(COMMANDS_FILE).Length];
+            try
+            {
+                sr = new StreamReader(COMMANDS_FILE);
+                int i = 0;
+                while (!sr.EndOfStream)
+                {
+                    comandos[i] += sr.ReadLine();
+                    i++;
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            finally { sr?.Close(); }
+            return comandos;
         }
     }
 }
