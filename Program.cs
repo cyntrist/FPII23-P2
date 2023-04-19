@@ -38,7 +38,6 @@ namespace AdventureGame
                 if(key.Key == ConsoleKey.Tab) //si se pulsa tabulador
                 {
                     //se buscan comandos para autocompletar
-                    Console.WriteLine("pito");
                     //autocompletado.BuscarComandos(Console.ReadLine()!);
                 }
             }
