@@ -15,6 +15,7 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
+            //AutocompletadoComandos autocompletado = new(); //wip
             int playerRoom          = 1;
 
             ReadInventory(ITEMS_FILE, map); 
@@ -31,6 +32,15 @@ namespace AdventureGame
             {
                 Console.Write("> ");
                 ProcessCommand(map, Console.ReadLine()!, ref playerRoom, inventory);
+
+                // EXTENSION
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if(key.Key == ConsoleKey.Tab) //si se pulsa tabulador
+                {
+                    //se buscan comandos para autocompletar
+                    Console.WriteLine("pito");
+                    //autocompletado.BuscarComandos(Console.ReadLine()!);
+                }
             }
         }
 
