@@ -26,11 +26,14 @@ namespace AdventureGame
             //map.WriteMap();
 
             Console.Write("Welcome to Adventure!! "); Instructions();   // INTRODUCCIÓN
-            Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
+            string[] commands = ReadCommands();                         // HISTORIAL DE COMANDOS DE ARCHIVO
+            Console.WriteLine("\n" + map.GetInfoRoom(playerRoom) + "\n");      // INFORMACIÓN INICIAL
 
-            string[] commands = ReadCommands();                         // HISTORIAL DE COMANDOS
-            if (commands.Length > 0) // implícitamente comprueba que existe el archivo y tiene por lo menos una línea
+            string historial = string.Empty; // historial de comandos de esta sesión
+            if (commands != null && commands.Length > 0) 
+                // comprueba que existe el archivo y tiene por lo menos una línea
             {
+                Console.WriteLine("Command History:\n");
                 for (int i = 0; i < commands.Length; i++) // para cada comando
                 {
                     Console.WriteLine("> " + commands[i]); // lo muestra
@@ -41,18 +44,23 @@ namespace AdventureGame
             while (playerRoom > 0)                                      // BUCLE PRINCIPAL
             {
                 Console.Write("> ");
-                ProcessCommand(map, Console.ReadLine()!, ref playerRoom, inventory);
+                string input = Console.ReadLine()!;
+                ProcessCommand(map, input, ref playerRoom, inventory);
+                if (input.Trim().ToUpper() != "END") 
+                    historial += "," + input;
 
                 // EXTENSION
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                if(key.Key == ConsoleKey.Tab) //si se pulsa tabulador
+                //ConsoleKeyInfo key = Console.ReadKey(true);
+                //if(key.Key == ConsoleKey.Tab) //si se pulsa tabulador
                 {
                     //se buscan comandos para autocompletar
                     //autocompletado.BuscarComandos(Console.ReadLine()!);
                 }
             }
 
-            // guardado
+            if (SaveCommands(historial))                                                      // GUARDADO DE HISTORIAL
+                Console.WriteLine("The game has been saved succesfully.");
+            else Console.WriteLine("The game has ended without saving.");
         }
 
         #region Métodos Read
@@ -199,7 +207,7 @@ namespace AdventureGame
         {
             Console.WriteLine("Would you like instructions?");
             Console.Write("\n> ");
-            if (Console.ReadLine()!.ToUpper() == "YES") 
+            if (Console.ReadLine()!.Trim().ToUpper() == "YES") 
                 Console.WriteLine("\nSomewhere nearby is Colossal Cave, where others have found fortunes " +
                     "in treasure and gold, though it is rumored that some who enter are never seen again. " +
                     " Magic is said to work in the cave.  I will be your eyes and hands.  Direct me with " +
@@ -209,10 +217,11 @@ namespace AdventureGame
         static string[] ReadCommands()
         { // lea comandos de un archivo dado (uno por línea, por ejemplo) y los ejecute en secuencia.
             StreamReader sr = null!;
-            string[] comandos = new string[File.ReadAllLines(COMMANDS_FILE).Length];
+            string[] comandos = null!;
             try
             {
                 sr = new StreamReader(COMMANDS_FILE);
+                comandos = new string[File.ReadAllLines(COMMANDS_FILE).Length];
                 int i = 0;
                 while (!sr.EndOfStream)
                 {
@@ -220,9 +229,27 @@ namespace AdventureGame
                     i++;
                 }
             }
-            catch (Exception e) { Console.WriteLine(e.Message); }
+            catch (FileNotFoundException fnfe) { Console.WriteLine("There is no command save file."); }
+            catch (Exception e) { Console.WriteLine($"Error: " + e.Message); }
             finally { sr?.Close(); }
             return comandos;
+        }
+
+        static bool SaveCommands(string commands)
+        {
+            bool retorno = false;
+            StreamWriter sw = null!;
+            try
+            {
+                sw = new StreamWriter(COMMANDS_FILE, true);
+                string[] words = commands.Trim().ToUpper().Split(",", StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < words.Length; i++)
+                    sw.WriteLine(words[i]);
+                retorno = true;
+            }
+            catch (Exception e) { Console.WriteLine($"Error: " + e.Message); retorno = false; }
+            finally { sw?.Close(); }
+            return retorno;
         }
     }
 }
