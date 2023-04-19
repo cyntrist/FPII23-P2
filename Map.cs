@@ -75,7 +75,7 @@ namespace AdventureGame
                 rooms[nRoom] = newRoom;
                 nRooms++;
             }
-            else // si no
+            else // si no cabe
                 Console.WriteLine("No se puede añadir la habitación.");
         }
 
