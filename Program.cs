@@ -23,7 +23,7 @@ namespace AdventureGame
             map.SetItemsRooms();
             //map.WriteMap();
 
-            Console.Write("WELCOME TO ADVENTURE!! ");
+            Console.Write("Welcome to Adventure!! ");
             Instructions();
 
             Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
