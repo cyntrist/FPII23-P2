@@ -176,14 +176,20 @@ namespace AdventureGame
           // debido a los movimientos forzados). Para ello intenta el primer movimiento; si es posible,
           // mientras la habitación destino sea de movimiento forzado, realiza los siguientes movimientos
           // y va guardando los sucesivos números de habitación en una lista, que devolverá al final.
-            
-            ListaEnlazada visitadas = new(); //creamos lista de habitaciones visitadas
 
-            while(rooms[nRooms].Move(dir, inventory) != -1) //mientras movimiento funciona
+            ListaEnlazada visitadas = new(); // creamos lista de habitaciones visitadas
+            nRoom = rooms[nRoom].Move(dir, inventory); // intenta el primer movimiento
+            if (nRoom > -1 ) // si ha sido posible
             {
-                visitadas.InsertaFinal(nRoom); //añadimos room
+                visitadas.InsertaFinal(nRoom); // añadimos habitación a la lista
+                if (rooms[nRoom].ForcedMove()) // si ésta habitacion tiene forzadas, todas sus rutas lo son
+                    while (nRoom > -1 && rooms[nRoom].ForcedMove()) // mientras tenga rutas y forzadas
+                    {
+                        nRoom = rooms[nRooms].Move("FORCED", inventory); // movemos a forzado
+                        visitadas.InsertaFinal(nRoom); // añadimos la nueva sala a la lista
+                    }
             }
-            return visitadas; //y devolvemos lista
+            return visitadas; // y devolvemos lista
         }
         public string GetItemsInfo(ListaEnlazada inventory)
         { // devuelve un string con el nombre y la descripción de los ítems de inventory.

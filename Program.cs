@@ -109,6 +109,7 @@ namespace AdventureGame
                 {
                     case "HELP": // muestra la ayuda del juego
                         Console.WriteLine("COMMANDS: "
+                                        + "\n\tHelp: shows available commands."
                                         + "\n\tInventory: shows the content of your inventory."
                                         + "\n\tLook: shows the information of the current room."
                                         + "\n\tItems: shows the items in the current room."
