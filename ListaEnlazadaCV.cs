@@ -79,25 +79,16 @@ namespace Listas{
 
 		public int[] ToArray()
 		{
-			int length = 0;
-			Nodo actual = pri;
-			while (actual != null) //cuenta cuantos nodos hay para ver longitud
-			{
-				length++;
-				actual = actual.sig;
-			}
-			
+            Nodo actual = pri;
+            int length = NumElems();
 			int[] array = new int[length]; //creo nuevo array de enteros con la longitud anterior
-			int ind = 0;
-			actual = pri;
-
+			int i = 0;
 			while (actual != null) //se copian los datos de los nodos en el array nuevo
 			{
-				array[ind] = actual.dato;
+				array[i] = actual.dato;
 				actual = actual.sig;
-				ind++; //aumenta indice del array
+				i++; //aumenta indice del array
 			}
-
 			return array;
 		}
 

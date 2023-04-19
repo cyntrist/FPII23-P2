@@ -1,10 +1,7 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
-using AdventureGame;
 using Listas;
 
 namespace AdventureGame
@@ -18,7 +15,7 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
-            int playerRoom          = 10;
+            int playerRoom          = 3;
 
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
@@ -118,19 +115,26 @@ namespace AdventureGame
                                         + "\n\t<direction>: moves you to the specified direction."); 
                         break;
                     case "INVENTORY": // muestra el inventario actual del jugador
-                        Console.WriteLine("Inventory " + inventory.ToString());
+                        string inventario = map.GetItemsInfo(inventory);
+                        if (inventario.Trim() == string.Empty)
+                            Console.WriteLine("There are no items in your inventory.");
+                        else Console.WriteLine(inventario);
                         break;
                     case "LOOK": // muestra la información de la habitación actual
                         Console.WriteLine(map.GetInfoRoom(playerRoom));
                         break;
                     case "ITEMS": // muestra los ítems de la habitación actual
-                        Console.WriteLine("Room " + map.GetItemsRoom(playerRoom));
+                        string items = map.GetItemsRoom(playerRoom);
+                        if (items.Trim() == string.Empty)
+                            Console.WriteLine("There are no items in your inventory.");
+                        else Console.WriteLine(items);
                         break;
                     case "TAKE": // si el item está en habitación actual lo recoge
                                  // y lo añade al inventario del jugador;
                                  // mensaje de error en otro caso
                         if (words.Length > 1) // si hay una 2ª palabra
-                            if (map.TakeItemRoom(playerRoom, words[1], inventory));
+                            if (map.TakeItemRoom(playerRoom, words[1], inventory))
+                                Console.WriteLine(words[1] + " taken.");
                             else Console.WriteLine("There is no such item in the room.");
                         else Console.WriteLine("Please specify an item to take.");
                         break;
@@ -138,7 +142,8 @@ namespace AdventureGame
                                  // lo elimina del inventario y lo deja en la habitación actual;
                                  // mensaje de error en otro caso
                         if (words.Length > 1) // si hay una 2ª palabra
-                            if (map.DropItemRoom(playerRoom, words[1], inventory));
+                            if (map.DropItemRoom(playerRoom, words[1], inventory))
+                                Console.WriteLine(words[1] + " dropped.");
                             else Console.WriteLine("There is no such item in your inventory.");
                         else Console.WriteLine("Please specify an item to drop.");
                         break;
@@ -150,7 +155,7 @@ namespace AdventureGame
                         int[] salas = map.Move(playerRoom, words[0], inventory).ToArray();
                         if (salas.Length > 0)
                         {
-                            for (int i = 0; i < salas.Length; i++)
+                            for (int i = 0; i < salas.Length && salas[i] > 0; i++)
                                 Console.WriteLine("\n" + map.GetInfoRoom(salas[i]));
                             playerRoom = salas[^1];
                         }

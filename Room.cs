@@ -1,10 +1,7 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using AdventureGame;
 using Listas;
-using System.Diagnostics;
-using static AdventureGame.Map;
 
 namespace AdventureGame
 {
@@ -61,12 +58,6 @@ namespace AdventureGame
         public int[] GetArrayItems()
         {
             return items.ToArray();
-        }
-
-        public string GetStringItems() // MÉTODO NUEVO: ILEGAL??
-                                       // creo que no porque ToString es público y ya hay GetArrayItems
-        {
-            return items.ToString();
         }
 
         #region 6. Acciones del Jugador

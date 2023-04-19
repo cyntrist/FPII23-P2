@@ -1,7 +1,6 @@
 ﻿// Cynthia Tristán Álvarez
 // Paula Sierra Luque
 
-using AdventureGame;
 using Listas;
 
 namespace AdventureGame
@@ -97,7 +96,20 @@ namespace AdventureGame
 
         public string GetItemsRoom(int nRoom)
         { // devuelve un string con la información de los ítems de la habitación nRoom.
-            return rooms[nRoom].GetStringItems();
+            string info = string.Empty;
+            int[] indexes = rooms[nRoom].GetArrayItems();
+            for (int i = 0; i < indexes.Length; i++)
+                info += items[indexes[i]].name + " ";
+            return info;
+        }
+
+        public string GetItemsInfo(ListaEnlazada inventory)
+        { // devuelve un string con el nombre y la descripción de los ítems de inventory.
+            string info = string.Empty;
+            int[] indexes = inventory.ToArray();
+            for (int i = 0; i < indexes.Length; i++)
+                info += items[indexes[i]].name + " ";
+            return info;
         }
 
         #region 5. Lectura y almacenamiento de datos
@@ -123,7 +135,7 @@ namespace AdventureGame
                                     + "\t" + rooms[i].routes[j].conditionalItem);
 
                 if (rooms[i].GetArrayItems().Length > 0) // si la habitación tiene items
-                    Console.WriteLine("Item " + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
+                    Console.WriteLine("Items: " + GetItemsRoom(i)); // ÍTEMS DE LA HABITACIÓN
                 Console.WriteLine(); 
             }
         }
@@ -186,10 +198,6 @@ namespace AdventureGame
                     }
             }
             return visitadas; // y devolvemos lista
-        }
-        public string GetItemsInfo(ListaEnlazada inventory)
-        { // devuelve un string con el nombre y la descripción de los ítems de inventory.
-            return inventory.ToString();
         }
         #endregion
     }
