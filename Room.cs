@@ -5,7 +5,7 @@ using Listas;
 
 namespace AdventureGame
 {
-    public class Room
+    internal class Room
     {
         public struct Route
         { // tipo para las rutas
@@ -28,6 +28,7 @@ namespace AdventureGame
             items = new ListaEnlazada();
         }
 
+        #region Adición
         public void AddRoute(string dir, int desR, int condIt)
         {
             if (nRoutes < routes.Length) // si hay espacio
@@ -49,7 +50,9 @@ namespace AdventureGame
         {
             items.InsertaFinal(it);
         }
+        #endregion
 
+        #region Información
         public string GetInfo()
         {
             return name + "\n" + description;
@@ -59,6 +62,7 @@ namespace AdventureGame
         {
             return items.ToArray();
         }
+        #endregion
 
         #region 6. Acciones del Jugador
         public int Move(string dir, ListaEnlazada inventory)

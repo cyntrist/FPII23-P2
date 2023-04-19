@@ -5,7 +5,7 @@ using Listas;
 
 namespace AdventureGame
 {
-    public class Map
+    internal class Map
     {
         public struct Item
         { // información de cada ítem
@@ -15,7 +15,7 @@ namespace AdventureGame
 
         Room[] rooms; // array de habitaciones indexadas con la numeración de CrowtherRooms
         int nRooms; // número de habitaciones = índice a la primera posición libre en rooms
-        public Item[] items; // array de items en el juego indexados por orden de aparición en el archivo
+        Item[] items; // array de items en el juego indexados por orden de aparición en el archivo
         int nItems; // número de ítems = índice la primera posición libre en items
         int maxRoutes; // número máximo de rutas por habitación
 
@@ -29,6 +29,7 @@ namespace AdventureGame
             nItems = 0;
         }
 
+        #region Adición
         public void AddItemMap(string name, string description, int iniRoom)
         // anade item a array de items con datos dados, anade item al mapa pero no lo coloca
         // en la habitacion. la habitacion puede no estar creada (se usara SetItemsRoom)
@@ -47,19 +48,6 @@ namespace AdventureGame
             }
             else // si no hay espacio
                 Console.WriteLine("ERROR: no se puede añadir nueva ruta.");
-        }
-
-        private int GetItemIndex(string name)
-        { // busca el ítem name en el array de ítems y devuelve
-          // su posición en dicho array; -1 si no existe tal ítem. buscadato()??
-            int index = 0;
-            while (index < items.Length && items[index].name != name) // solucionado error de salida de array
-                index++;
-
-            if (index == items.Length) // si ha acabado el array significa que NO lo ha encontrado
-                return -1;
-            else // si ha acabado antes de llegar al final significa que SÍ lo ha encontrado
-                return index;
         }
 
         public void AddRoom(int nRoom, string name, string description)
@@ -88,6 +76,21 @@ namespace AdventureGame
         { // añade el ítem itemId a la habitación nRoom.
             rooms[nRoom].AddItem(itemId);
         }
+        #endregion
+
+        #region Información
+        private int GetItemIndex(string name)
+        { // busca el ítem name en el array de ítems y devuelve
+          // su posición en dicho array; -1 si no existe tal ítem. buscadato()??
+            int index = 0;
+            while (index < items.Length && items[index].name != name) // solucionado error de salida de array
+                index++;
+
+            if (index == items.Length) // si ha acabado el array significa que NO lo ha encontrado
+                return -1;
+            else // si ha acabado antes de llegar al final significa que SÍ lo ha encontrado
+                return index;
+        }
 
         public string GetInfoRoom(int nRoom)
         { // devuelve una cadena de texto con el nombre y la descripción de la habitación nRoom.
@@ -111,6 +114,7 @@ namespace AdventureGame
                 info += items[indexes[i]].name + " ";
             return info;
         }
+        #endregion
 
         #region 5. Lectura y almacenamiento de datos
         public void SetItemsRooms()

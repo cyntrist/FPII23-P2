@@ -21,9 +21,11 @@ namespace AdventureGame
             ReadRooms(ROOMS_FILE, map);
 
             map.SetItemsRooms();
-            //map.WriteMap();
+            map.WriteMap();
 
-            Console.WriteLine("ADVENTURE\n" + map.GetInfoRoom(playerRoom) + "\n");
+            Console.WriteLine("WELCOME TO ADVENTURE!!\n");
+
+            Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
             while (playerRoom > 0) // bucle ppal.
             {
                 Console.Write("> ");
@@ -32,7 +34,7 @@ namespace AdventureGame
         }
 
         #region Métodos Read
-        static private void ReadInventory(string file, Map map)
+        static void ReadInventory(string file, Map map)
         //lee archivo file y escribe informacion en pantalla
         {
             StreamReader sr = null!;
@@ -49,14 +51,13 @@ namespace AdventureGame
                     map.AddItemMap(name, desc, int.Parse(iniRoom)); // duda con el enunciado resuelta
                 }
             }
-            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: " +
-                            $"No se ha encontrado archivo de inventario.\n{fnfe.Message}"); }
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de inventario.\n{fnfe.Message}"); }
             catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
             catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
             finally { sr?.Close(); }
         }
 
-        static private void ReadRooms(string file, Map map)
+        static void ReadRooms(string file, Map map)
         //lee archivo file, coge el numero de cada habitacion e invoca ReadRoom()
         {
             StreamReader f = null!;
@@ -69,14 +70,13 @@ namespace AdventureGame
                     ReadRoom(ref f, n, map);          // lee esta habitación
                 }
             }
-            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: " +
-                            $"No se ha encontrado archivo de habitaciones.\n{fnfe.Message}"); }
+            catch (FileNotFoundException fnfe) { Console.WriteLine($"ERROR DE ARCHIVO: No se ha encontrado archivo de habitaciones.\n{fnfe.Message}"); }
             catch (IOException ioe) { Console.WriteLine($"ERROR DE I/O: {ioe.Message}"); }
             catch (Exception e) { Console.WriteLine($"ERROR: {e.Message}"); Environment.Exit(0); }
             finally { f?.Close(); }
         }
 
-        static private void ReadRoom(ref StreamReader f, int n, Map map)
+        static void ReadRoom(ref StreamReader f, int n, Map map)
         { 
             string name, desc;
             name = f.ReadLine()!;
@@ -101,7 +101,7 @@ namespace AdventureGame
         static void ProcessCommand(Map map, string input, ref int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            if (words?.Length > 0 ) 
+            if (words?.Length > 0) // si se ha escrito algo
                 switch (words[0])
                 {
                     case "HELP": // muestra la ayuda del juego
@@ -111,24 +111,28 @@ namespace AdventureGame
                                         + "\n\tLook: shows the information of the current room."
                                         + "\n\tItems: shows the items in the current room."
                                         + "\n\tTake <item>: moves the item in the room to your inventory."
-                                        + "\n\tDrop <item>: moves the item in your inventory to the current room."
-                                        + "\n\t<direction>: moves you to the specified direction."); 
+                                        + "\n\tDrop <item>: moves the item in your inventory to the room."
+                                        + "\n\t<direction>: moves you towards the specified direction."); 
                         break;
+
                     case "INVENTORY": // muestra el inventario actual del jugador
                         string inventario = map.GetItemsInfo(inventory);
                         if (inventario.Trim() == string.Empty)
                             Console.WriteLine("There are no items in your inventory.");
                         else Console.WriteLine(inventario);
                         break;
+
                     case "LOOK": // muestra la información de la habitación actual
                         Console.WriteLine(map.GetInfoRoom(playerRoom));
                         break;
+
                     case "ITEMS": // muestra los ítems de la habitación actual
                         string items = map.GetItemsRoom(playerRoom);
                         if (items.Trim() == string.Empty)
                             Console.WriteLine("There are no items in your inventory.");
                         else Console.WriteLine(items);
                         break;
+
                     case "TAKE": // si el item está en habitación actual lo recoge
                                  // y lo añade al inventario del jugador;
                                  // mensaje de error en otro caso
@@ -138,6 +142,7 @@ namespace AdventureGame
                             else Console.WriteLine("There is no such item in the room.");
                         else Console.WriteLine("Please specify an item to take.");
                         break;
+
                     case "DROP": // si el ítem está en el inventario del jugador,
                                  // lo elimina del inventario y lo deja en la habitación actual;
                                  // mensaje de error en otro caso
@@ -147,18 +152,21 @@ namespace AdventureGame
                             else Console.WriteLine("There is no such item in your inventory.");
                         else Console.WriteLine("Please specify an item to drop.");
                         break;
+
                     case "END": // sale del programa
                         playerRoom = -1;
                         break;
+
                     default: // se interpreta como dirección de movimiento,
                              // que se gestionará con el método correspondiente de Map.
-                        int[] salas = map.Move(playerRoom, words[0], inventory).ToArray();
-                        if (salas.Length > 0)
+                        int[] salas = map.Move(playerRoom, words[0], inventory).ToArray(); // salas del camino realizado 
+                        if (salas.Length > 0) // si se ha movido 
                         {
-                            for (int i = 0; i < salas.Length && salas[i] > 0; i++)
-                                Console.WriteLine("\n" + map.GetInfoRoom(salas[i]));
+                            for (int i = 0; i < salas.Length && salas[i] > 0; i++) // para cada sala del camino (excepto sala final)
+                                Console.WriteLine("\n" + map.GetInfoRoom(salas[i])); // muestra la información 
                             playerRoom = salas[^1];
                         }
+                        else Console.WriteLine("Cannot move in that direction."); // lo interpreta como movimiento inválido
                         break;
                 }
             Console.WriteLine(); // línea vacía estética de separación
