@@ -21,9 +21,10 @@ namespace AdventureGame
             ReadRooms(ROOMS_FILE, map);
 
             map.SetItemsRooms();
-            map.WriteMap();
+            //map.WriteMap();
 
-            Console.WriteLine("WELCOME TO ADVENTURE!!\n");
+            Console.Write("WELCOME TO ADVENTURE!! ");
+            Instructions();
 
             Console.WriteLine(map.GetInfoRoom(playerRoom) + "\n");
             while (playerRoom > 0) // bucle ppal.
@@ -98,6 +99,7 @@ namespace AdventureGame
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
         #endregion
+
         static void ProcessCommand(Map map, string input, ref int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -107,7 +109,7 @@ namespace AdventureGame
                     case "HELP": // muestra la ayuda del juego
                         Console.WriteLine("COMMANDS: "
                                         + "\n\tHelp: shows available commands."
-                                        + "\n\tInventory: shows the content of your inventory."
+                                        + "\n\tInventory: shows the contents of your inventory."
                                         + "\n\tLook: shows the information of the current room."
                                         + "\n\tItems: shows the items in the current room."
                                         + "\n\tTake <item>: moves the item in the room to your inventory."
@@ -117,7 +119,7 @@ namespace AdventureGame
 
                     case "INVENTORY": // muestra el inventario actual del jugador
                         string inventario = map.GetItemsInfo(inventory);
-                        if (inventario.Trim() == string.Empty)
+                        if (inventario.Trim() == string.Empty) // si está vacío
                             Console.WriteLine("There are no items in your inventory.");
                         else Console.WriteLine(inventario);
                         break;
@@ -128,7 +130,7 @@ namespace AdventureGame
 
                     case "ITEMS": // muestra los ítems de la habitación actual
                         string items = map.GetItemsRoom(playerRoom);
-                        if (items.Trim() == string.Empty)
+                        if (items.Trim() == string.Empty) // si está vacío
                             Console.WriteLine("There are no items in your inventory.");
                         else Console.WriteLine(items);
                         break;
@@ -170,6 +172,17 @@ namespace AdventureGame
                         break;
                 }
             Console.WriteLine(); // línea vacía estética de separación
+        }
+
+        static void Instructions()
+        {
+            Console.WriteLine("Would you like instructions?");
+            Console.Write("\n> ");
+            if (Console.ReadLine()!.ToUpper() == "YES") 
+                Console.WriteLine("\nSomewhere nearby is Colossal Cave, where others have found fortunes " +
+                    "in treasure and gold, though it is rumored that some who enter are never seen again. " +
+                    " Magic is said to work in the cave.  I will be your eyes and hands.  Direct me with " +
+                    "commands of 1 or 2 words.  Should you get stuck, type \"HELP\" for some general commands.\n");
         }
     }
 }

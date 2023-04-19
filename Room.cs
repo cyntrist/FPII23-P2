@@ -105,7 +105,6 @@ namespace AdventureGame
             while (i < nRoutes && routes[i].direction != "FORCED") // hasta que encuentre una ruta forzada o acabe
                 i++; // lo sigue recorriendo
             if (i < nRoutes) // si cuando acaba es menor o igual que el tamaño del array, lo ha encontrado
-            // qué condicion es mejor, ésta o -> if (routes[i].direction == "FORCED") ----> creo que da igual, podria ser un && como en el while ?
                 retorno = true; // devuelve true
             return retorno; // si no, false
         }

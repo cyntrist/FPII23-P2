@@ -2,6 +2,7 @@
 // Paula Sierra Luque
 
 using Listas;
+using System;
 
 namespace AdventureGame
 {
@@ -150,10 +151,10 @@ namespace AdventureGame
           // en otro caso devuelve false.
             bool retorno = false;
             int[] roomItems = rooms[nRoom].GetArrayItems(); // índices de los ítems en la habitacion
+            int index = GetItemIndex(itemName); // índice general del ítem a buscar
 
-            if (roomItems.Length > 0) // si la habitación tiene objetos
+            if (roomItems.Length > 0 && index > -1) // si la habitación tiene objetos y el índice es válido
             {
-                int index = GetItemIndex(itemName); // índice general del ítem a buscar
                 int i     = 0;                      // contador
                 while (i < roomItems.Length && roomItems[i] != index) // mientras recorra el array && no encuentre el ítem
                     i++;
