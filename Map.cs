@@ -179,10 +179,10 @@ namespace AdventureGame
             {
                 visitadas.InsertaFinal(nextRoom); // añadimos habitación a la lista
                 if (rooms[nextRoom].ForcedMove()) // si ésta habitacion tiene forzadas, todas sus rutas lo son
-                    while (rooms[nextRoom] != null && nextRoom > -1 && rooms[nextRoom].ForcedMove()) // mientras tenga rutas y forzadas
+                    while (rooms[nextRoom] != null && rooms[nextRoom].ForcedMove()) // mientras tenga rutas y forzadas
                     {
                         nextRoom = rooms[nextRoom].Move("FORCED", inventory); // movemos a forzado
-                        visitadas.InsertaFinal(nRoom); // añadimos la nueva sala a la lista
+                        visitadas.InsertaFinal(nextRoom); // añadimos la nueva sala a la lista
                     }
             }
             return visitadas; // y devolvemos lista
