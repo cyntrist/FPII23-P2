@@ -15,7 +15,7 @@ namespace AdventureGame
         {
             Map map                 = new();
             ListaEnlazada inventory = new();
-            int playerRoom          = 3;
+            int playerRoom          = 1;
 
             ReadInventory(ITEMS_FILE, map); 
             ReadRooms(ROOMS_FILE, map);
