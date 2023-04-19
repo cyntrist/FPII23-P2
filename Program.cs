@@ -36,6 +36,7 @@ namespace AdventureGame
 
         #region Métodos Read
         static private void ReadInventory(string file, Map map)
+        //lee archivo file y escribe informacion en pantalla
         {
             StreamReader sr = null!;
             try
@@ -59,6 +60,7 @@ namespace AdventureGame
         }
 
         static private void ReadRooms(string file, Map map)
+        //lee archivo file, coge el numero de cada habitacion e invoca ReadRoom()
         {
             StreamReader f = null!;
             try
@@ -83,7 +85,7 @@ namespace AdventureGame
             name = f.ReadLine()!;
             desc = f.ReadLine()!;
             f.ReadLine();                                            // Línea separatoria "------"
-            map.AddRoom(n, name, desc);                              // Añade al mapa la habitación leída
+            map.AddRoom(n, name, desc);                              // Añade la habitacion leida al mapa
             string newline = f.ReadLine()!;                               // Lee la siguiente línea
             while (!string.IsNullOrWhiteSpace(newline))                   // Hasta que haya línea en blanco
             {
@@ -98,7 +100,7 @@ namespace AdventureGame
                 newline = f.ReadLine()!;                                  // Siguiente línea
             }                                                        // Si la siguiente línea es blanca, acaba el método
         }
-
+        #endregion
         static void ProcessCommand(Map map, string input, int playerRoom, ListaEnlazada inventory)
         {
             string[] words = input.Trim().ToUpper().Split(" ", StringSplitOptions.RemoveEmptyEntries);
@@ -146,6 +148,5 @@ namespace AdventureGame
                 }
             Console.WriteLine(); // línea vacía estética de separación
         }
-        #endregion
     }
 }
